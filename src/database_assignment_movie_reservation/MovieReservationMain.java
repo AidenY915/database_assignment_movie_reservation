@@ -5,7 +5,7 @@ import frame.MovieReservationFrame;
 public class MovieReservationMain {
 
 	public static void main(String[] args) {
-		MovieReservationFrame.getMovieBookingFrame();
+		MovieReservationFrame.getMovieReservationFrame();
 		return;
 	}
 }
