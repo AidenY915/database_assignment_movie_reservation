@@ -16,3 +16,7 @@ public class Service {
 		return 0;
 	}
 }
+
+
+
+// login, 영화 목록 조회, 상세조회 ,가로 20 세로 15

@@ -2,6 +2,11 @@ package panel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,7 +19,7 @@ public class LoginPanel extends MovieReservationPanel {
 	public LoginPanel() {
 		super();
 		setLayout(null);
-		
+
 		JLabel idLabel = new JLabel("ID");
 		JLabel passwordLabel = new JLabel("PW");
 		JTextField idTextField = new JTextField();
@@ -32,6 +37,11 @@ public class LoginPanel extends MovieReservationPanel {
 		add(loginButton);
 		loginButton.setBounds(110, 200, 100, 50);
 
+		KeyListener loginKeyListener = new LoginKeyListener(loginButton);
+		idTextField.addKeyListener(loginKeyListener);
+		passwordTextField.addKeyListener(loginKeyListener);
+		loginButton.addKeyListener(loginKeyListener);
+
 	}
 }
 
@@ -39,39 +49,65 @@ class LoginButton extends JButton {
 	private JTextField idTextField;
 	private JTextField passwordTextField;
 	private Service service = Service.getService();
+
 	LoginButton(JTextField idTextField, JTextField passwordTextField) {
 		super("로그인");
 		this.idTextField = idTextField;
 		this.passwordTextField = passwordTextField;
-		this.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-				int loginRslt = service.login(idTextField.getText(), passwordTextField.getText());
-				if(loginRslt == 0) return;
-				else if(loginRslt == 1){
-//					frame.changePanel(사용자 페이지);
-				}else if(loginRslt == 2) {
-//					frame.changePanel(관리자 페이지);
-				}
-			}
+		this.addActionListener(new ActionListener() {
 
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				performLogin();
+				passwordTextField.setText("");
+
 			}
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
 		});
 	}
-	
+
+	private void performLogin() {
+		MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+		int loginRslt = service.login(idTextField.getText(), passwordTextField.getText());
+		if (loginRslt == 0)
+			return;
+		else if (loginRslt == 1) {
+			// frame.changePanel(사용자 페이지);
+		} else if (loginRslt == 2) {
+			// frame.changePanel(관리자 페이지);
+		}
+
+	}
+
 }
+
+class LoginKeyListener implements KeyListener {
+
+	private JButton loginBtn;
+
+	public LoginKeyListener(JButton loginBtn) {
+		super();
+		this.loginBtn = loginBtn;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyChar() == '\n')
+			loginBtn.doClick();
+	}
+};
+
+// 비밀번호를 입력하고 엔터를 누를시 로그인 버튼을 누른것과 동일한 작업 수행
