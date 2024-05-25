@@ -1,29 +1,50 @@
 package frame;
 
 import javax.swing.JFrame;
+
+import panel.UserLoginPanel;
+import panel.AdminLoginPanel;
+import panel.LoginChoice;
 import panel.MovieReservationPanel;
-import panel.LoginPanel;
+import panel.RegisterPanel;
 
 public class MovieReservationFrame extends JFrame {
-	final static public int WIDTH = 500, HEIGHT = 800;
+	final static public int WIDTH = 1000, HEIGHT = 800;
 	//싱글톤 패턴
 	static private MovieReservationFrame movieReservationFrame = new MovieReservationFrame();
 	
 	private MovieReservationPanel currentPanel = null; 
-	private MovieReservationPanel loginPanel = new LoginPanel();
+	private MovieReservationPanel loginchoicepanel=new LoginChoice();
+	private MovieReservationPanel userloginPanel = new UserLoginPanel();
+	private MovieReservationPanel adminloginpanel= new AdminLoginPanel();
+	private MovieReservationPanel registerPanel = new RegisterPanel();
 	
 	public MovieReservationPanel getCurrentPanel() {
 		return currentPanel;
 	}
-	public MovieReservationPanel getLoginPanel() {
-		return loginPanel;
+	public MovieReservationPanel getUserLoginPanel() {
+//		0 넘어감
+		
+		return userloginPanel;
 	}
+	public MovieReservationPanel getAdminLoginPanel() {
+//		1 
+		return adminloginpanel;
+	} 
+	public MovieReservationPanel getRegisterPanel() {
+		return registerPanel;
+	}
+	
+	
+	
+	
+	
 	private MovieReservationFrame(){
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50,50);
 		setSize(WIDTH, HEIGHT);
-		changePanel(loginPanel);
+		changePanel(loginchoicepanel);
 		setVisible(true);
 	}
 	//싱글톤 패턴 생성자 대신 호출
@@ -34,6 +55,7 @@ public class MovieReservationFrame extends JFrame {
 		if(currentPanel != null) {
 			getContentPane().remove(currentPanel); //왜 안먹지? 왜 중복돼서 아무것도 안나오지?
 		}
+		nextPanel.init();
 		getContentPane().add(nextPanel);
 		nextPanel.setVisible(true);
 		currentPanel = nextPanel;

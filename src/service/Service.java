@@ -15,6 +15,18 @@ public class Service {
 		System.out.println("아이디 : " + id + "\n비밀번호 : " + password);
 		return 0;
 	}
+	public boolean register(String id, String password) { 
+		if(isIdDuplicated(id)) return false;
+		
+//		아이디 등록
+		return true;
+		
+		
+	}
+	private boolean isIdDuplicated(String id) {
+//		아이디 중복 확인,
+		return false;
+	}
 }
 
 
