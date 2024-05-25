@@ -15,7 +15,7 @@ public class MovieReservationFrame extends JFrame {
 
 private UserDTO loginSession = null;
 
-	static private MovieReservationFrame movieReservationFrame = new MovieReservationFrame();
+	static private MovieReservationFrame movieReservationFrame;
 	
 	private MovieReservationPanel currentPanel = null; 
 	private MovieReservationPanel loginchoicepanel=new LoginChoice();
@@ -60,6 +60,8 @@ private UserDTO loginSession = null;
 
 	// 싱글톤 패턴 생성자 대신 호출
 	static public MovieReservationFrame getMovieReservationFrame() {
+		if(movieReservationFrame == null)
+			movieReservationFrame = new MovieReservationFrame();
 		return movieReservationFrame;
 	}
 

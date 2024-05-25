@@ -12,8 +12,6 @@ import dto.UserDTO;
 import frame.MovieReservationFrame;
 
 public class DAO implements DbInfo, SQLStatment {
-	private MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-
 	private DAO() {
 	}
 
