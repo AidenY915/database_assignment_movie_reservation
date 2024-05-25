@@ -5,5 +5,5 @@ import javax.swing.JPanel;
 import frame.MovieReservationFrame;
 
 abstract public class MovieReservationPanel extends JPanel {
-	private static MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame(); 
+	protected static MovieReservationFrame frame; 
 }

@@ -1,8 +1,5 @@
 package panel;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -41,7 +38,6 @@ public class LoginPanel extends MovieReservationPanel {
 		idTextField.addKeyListener(loginKeyListener);
 		passwordTextField.addKeyListener(loginKeyListener);
 		loginButton.addKeyListener(loginKeyListener);
-
 	}
 }
 
@@ -69,7 +65,7 @@ class LoginButton extends JButton {
 
 	private void performLogin() {
 		MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-		int loginRslt = service.login(idTextField.getText(), passwordTextField.getText());
+		int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(),0);
 		if (loginRslt == 0)
 			return;
 		else if (loginRslt == 1) {
@@ -93,14 +89,10 @@ class LoginKeyListener implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
