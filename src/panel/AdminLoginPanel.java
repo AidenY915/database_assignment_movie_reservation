@@ -119,7 +119,7 @@ public class AdminLoginPanel extends MovieReservationPanel {
 
 		private void performLogin() {
 			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-			int loginRslt = service.login(idTextField.getText(), passwordTextField.getText());
+			int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(),1);
 			if (loginRslt == 0)
 				return;
 			else if (loginRslt == 1) {
