@@ -1,5 +1,8 @@
 package panel;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -100,7 +103,7 @@ public class AdminLoginPanel extends MovieReservationPanel {
 		private JTextField passwordTextField;
 		private Service service = Service.getService();
 
-		LoginButton(JTextField idTextField, JTextField passwordTextField) {
+		public LoginButton(JTextField idTextField, JTextField passwordTextField) {
 			super("로그인");
 			this.idTextField = idTextField;
 			this.passwordTextField = passwordTextField;
@@ -155,7 +158,7 @@ public class AdminLoginPanel extends MovieReservationPanel {
 			if (e.getKeyChar() == '\n')
 				loginBtn.doClick();
 		}
-	}
+	};
 }
 
 class MoveToRegisterButton extends JButton {

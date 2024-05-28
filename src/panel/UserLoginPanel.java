@@ -35,12 +35,13 @@ public class UserLoginPanel extends MovieReservationPanel {
 		idTextField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
+            	
                 if (idTextField.getText().equals("ID를 입력하세요")) {
                     idTextField.setText("");
                     
                 }
             }
-
+ 
             @Override
             public void focusLost(FocusEvent e) {
                 if (idTextField.getText().equals("")) {
@@ -80,7 +81,7 @@ public class UserLoginPanel extends MovieReservationPanel {
 		idTextField.setBounds(330, 100, 330, 50);
 		passwordTextField.setBounds(330, 160, 330, 50);
 
-		JButton loginButton = new LoginButton(idTextField, passwordTextField);
+		JButton loginButton = new UserLoginButton(idTextField, passwordTextField);
 		add(loginButton);
 		loginButton.setBounds(330, 220, 330, 50);
 
@@ -95,12 +96,12 @@ public class UserLoginPanel extends MovieReservationPanel {
 	}
 }
 
-class LoginButton extends JButton {
+class UserLoginButton extends JButton {
 	private JTextField idTextField;
 	private JTextField passwordTextField;
 	private Service service = Service.getService();
 
-	LoginButton(JTextField idTextField, JTextField passwordTextField) {
+	UserLoginButton(JTextField idTextField, JTextField passwordTextField) {
 		super("로그인");
 		this.idTextField = idTextField;
 		this.passwordTextField = passwordTextField;
@@ -155,7 +156,7 @@ class LoginKeyListener implements KeyListener {
 		if (e.getKeyChar() == '\n')
 			loginBtn.doClick();
 	}
-}
+};
 
 class MoveToRegisterButton extends JButton {
 	private Service service = Service.getService();
@@ -180,4 +181,4 @@ class MoveToRegisterButton extends JButton {
 
 		this.addActionListener(new TmpListener());
 	}
-}
+};
