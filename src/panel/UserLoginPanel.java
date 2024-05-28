@@ -157,28 +157,3 @@ class LoginKeyListener implements KeyListener {
 			loginBtn.doClick();
 	}
 };
-
-class MoveToRegisterButton extends JButton {
-	private Service service = Service.getService();
-
-	MoveToRegisterButton() {
-		super("회원가입");
-		this.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-				frame.changePanel(frame.getRegisterPanel());
-
-			}
-		});
-		class TmpListener implements ActionListener {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-				frame.changePanel(frame.getRegisterPanel());
-			}
-		}
-
-		this.addActionListener(new TmpListener());
-	}
-};
