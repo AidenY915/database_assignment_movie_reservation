@@ -38,12 +38,13 @@ public class UserLoginPanel extends MovieReservationPanel {
 		idTextField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
+            	
                 if (idTextField.getText().equals("ID를 입력하세요")) {
                     idTextField.setText("");
                     
                 }
             }
-
+ 
             @Override
             public void focusLost(FocusEvent e) {
                 if (idTextField.getText().equals("")) {
@@ -158,7 +159,7 @@ class LoginKeyListener implements KeyListener {
 		if (e.getKeyChar() == '\n')
 			loginBtn.doClick();
 	}
-}
+};
 
 class MoveToRegisterButton extends JButton {
 	private Service service = Service.getService();
@@ -183,4 +184,4 @@ class MoveToRegisterButton extends JButton {
 
 		this.addActionListener(new TmpListener());
 	}
-}
+};
