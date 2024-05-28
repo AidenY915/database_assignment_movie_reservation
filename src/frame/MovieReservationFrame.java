@@ -2,11 +2,11 @@ package frame;
 
 import javax.swing.JFrame;
 
-import panel.UserLoginPanel;
 import panel.AdminLoginPanel;
 import panel.LoginChoice;
 import panel.MovieReservationPanel;
 import panel.RegisterPanel;
+import panel.UserLoginPanel;
 
 public class MovieReservationFrame extends JFrame {
 	final static public int WIDTH = 1000, HEIGHT = 800;

@@ -84,7 +84,7 @@ public class UserLoginPanel extends MovieReservationPanel {
 		idTextField.setBounds(330, 100, 330, 50);
 		passwordTextField.setBounds(330, 160, 330, 50);
 
-		JButton loginButton = new LoginButton(idTextField, passwordTextField);
+		JButton loginButton = new UserLoginButton(idTextField, passwordTextField);
 		add(loginButton);
 		loginButton.setBounds(330, 220, 330, 50);
 
@@ -99,12 +99,12 @@ public class UserLoginPanel extends MovieReservationPanel {
 	}
 }
 
-class LoginButton extends JButton {
+class UserLoginButton extends JButton {
 	private JTextField idTextField;
 	private JTextField passwordTextField;
 	private Service service = Service.getService();
 
-	LoginButton(JTextField idTextField, JTextField passwordTextField) {
+	UserLoginButton(JTextField idTextField, JTextField passwordTextField) {
 		super("로그인");
 		this.idTextField = idTextField;
 		this.passwordTextField = passwordTextField;

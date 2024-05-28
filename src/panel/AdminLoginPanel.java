@@ -103,7 +103,7 @@ public class AdminLoginPanel extends MovieReservationPanel {
 		private JTextField passwordTextField;
 		private Service service = Service.getService();
 
-		LoginButton(JTextField idTextField, JTextField passwordTextField) {
+		public LoginButton(JTextField idTextField, JTextField passwordTextField) {
 			super("로그인");
 			this.idTextField = idTextField;
 			this.passwordTextField = passwordTextField;
