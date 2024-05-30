@@ -1,6 +1,9 @@
 package service;
 
+import java.util.List;
+
 import dao.DAO;
+import dto.MovieDTO;
 import dto.UserDTO;
 import frame.MovieReservationFrame;
 
@@ -33,6 +36,11 @@ public class Service {
 	public boolean isIdDuplicated(String id) {
 //		아이디 중복 확인,
 		return false;
+	}
+	public List<MovieDTO> getMovieList(String title, String director, String[] actorArray, String genre) {
+		if(actorArray.length != 0)
+			return dao.selectMoviesWithActorNames(title, director, actorArray, genre);
+		return null;
 	}
 }
 

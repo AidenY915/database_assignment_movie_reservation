@@ -17,8 +17,9 @@ USE `db1` ;
 -- -----------------------------------------------------
 -- Table `db1`.`movie`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`movie` (
-  `movie_no` INT NOT NULL,
+DROP TABLE IF EXISTS `db1`.`movie`;
+CREATE TABLE `db1`.`movie` (
+  `movie_no` INT NOT NULL AUTO_INCREMENT,
   `moive_name` CHAR(45) NOT NULL,
   `running_time` INT NOT NULL,
   `age_rating` INT NOT NULL,
@@ -34,8 +35,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`screening_hall`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`screening_hall` (
-  `hall_no` INT NOT NULL,
+DROP TABLE IF EXISTS `db1`.`screening_hall`;
+CREATE TABLE `db1`.`screening_hall` (
+  `hall_no` INT NOT NULL AUTO_INCREMENT,
   `standard_price` INT NOT NULL,
   `hall_name` CHAR(20) NOT NULL,
   PRIMARY KEY (`hall_no`))
@@ -45,8 +47,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`screening_schedule`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`screening_schedule` (
-  `schedule_no` INT NOT NULL,
+DROP TABLE IF EXISTS `db1`.`screening_schedule`;
+CREATE TABLE `db1`.`screening_schedule` (
+  `schedule_no` INT NOT NULL AUTO_INCREMENT,
   `hall_no` INT NOT NULL,
   `screening_date` DATE NOT NULL,
   `screening_day` CHAR(3) NOT NULL,
@@ -72,7 +75,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`seat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`seat` (
+DROP TABLE IF EXISTS `db1`.`seat`;
+CREATE TABLE `db1`.`seat` (
   `hall_no` INT NOT NULL,
   `seat_no` CHAR(3) NOT NULL,
   PRIMARY KEY (`hall_no`, `seat_no`),
@@ -87,7 +91,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`user` (
+DROP TABLE IF EXISTS `db1`.`user`;
+CREATE TABLE `db1`.`user` (
   `user_id` CHAR(30) NOT NULL,
   `user_name` CHAR(30) NOT NULL,
   `phone_no` CHAR(11) NOT NULL,
@@ -101,7 +106,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`booking`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`booking` (
+CREATE INDEX idx_seat_no ON seat(seat_no); -- booking의 외래키 설정 떄문
+
+DROP TABLE IF EXISTS `db1`.`booking`;
+CREATE TABLE `db1`.`booking` (
   `booking_no` INT NOT NULL AUTO_INCREMENT,
   `payment_method` CHAR(20) NOT NULL,
   `payment_status` CHAR(20) NOT NULL DEFAULT 'pending',
@@ -135,7 +143,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`movie_ticket`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`movie_ticket` (
+DROP TABLE IF EXISTS `db1`.`movie_ticket`;
+CREATE TABLE `db1`.`movie_ticket` (
   `ticket_no` INT NOT NULL,
   `booking_no` INT NOT NULL,
   PRIMARY KEY (`ticket_no`, `booking_no`),
@@ -151,8 +160,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`actor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`actor` (
-  `actor_no` INT NOT NULL,
+DROP TABLE IF EXISTS `db1`.`actor`;
+CREATE TABLE `db1`.`actor` (
+  `actor_no` INT NOT NULL AUTO_INCREMENT,
   `actor_name` CHAR(20) NOT NULL,
   PRIMARY KEY (`actor_no`))
 ENGINE = InnoDB;
@@ -161,7 +171,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`casting`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db1`.`casting` (
+DROP TABLE IF EXISTS `db1`.`casting`;
+CREATE TABLE `db1`.`casting` (
   `actor_no` INT NOT NULL,
   `movie_no` INT NOT NULL,
   PRIMARY KEY (`actor_no`, `movie_no`),
