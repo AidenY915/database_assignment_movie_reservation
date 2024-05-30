@@ -14,13 +14,22 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `db1` DEFAULT CHARACTER SET utf8 ;
 USE `db1` ;
 
+DROP TABLE IF EXISTS booking;
+DROP TABLE IF EXISTS movie_ticket;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS seat;
+DROP TABLE IF EXISTS screening_schedule;
+DROP TABLE IF EXISTS screening_hall;
+DROP TABLE IF EXISTS actor;
+DROP TABLE IF EXISTS casting;
+DROP TABLE IF EXISTS movie;
+
 -- -----------------------------------------------------
 -- Table `db1`.`movie`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`movie`;
 CREATE TABLE `db1`.`movie` (
   `movie_no` INT NOT NULL AUTO_INCREMENT,
-  `moive_name` CHAR(45) NOT NULL,
+  `movie_name` CHAR(45) NOT NULL,
   `running_time` INT NOT NULL,
   `age_rating` INT NOT NULL,
   `director_name` CHAR(20) NOT NULL,
@@ -35,7 +44,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`screening_hall`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`screening_hall`;
 CREATE TABLE `db1`.`screening_hall` (
   `hall_no` INT NOT NULL AUTO_INCREMENT,
   `standard_price` INT NOT NULL,
@@ -47,7 +55,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`screening_schedule`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`screening_schedule`;
 CREATE TABLE `db1`.`screening_schedule` (
   `schedule_no` INT NOT NULL AUTO_INCREMENT,
   `hall_no` INT NOT NULL,
@@ -75,7 +82,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`seat`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`seat`;
 CREATE TABLE `db1`.`seat` (
   `hall_no` INT NOT NULL,
   `seat_no` CHAR(3) NOT NULL,
@@ -91,7 +97,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`user`;
 CREATE TABLE `db1`.`user` (
   `user_id` CHAR(30) NOT NULL,
   `user_name` CHAR(30) NOT NULL,
@@ -108,7 +113,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE INDEX idx_seat_no ON seat(seat_no); -- booking의 외래키 설정 떄문
 
-DROP TABLE IF EXISTS `db1`.`booking`;
 CREATE TABLE `db1`.`booking` (
   `booking_no` INT NOT NULL AUTO_INCREMENT,
   `payment_method` CHAR(20) NOT NULL,
@@ -143,7 +147,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`movie_ticket`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`movie_ticket`;
 CREATE TABLE `db1`.`movie_ticket` (
   `ticket_no` INT NOT NULL,
   `booking_no` INT NOT NULL,
@@ -160,7 +163,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`actor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`actor`;
 CREATE TABLE `db1`.`actor` (
   `actor_no` INT NOT NULL AUTO_INCREMENT,
   `actor_name` CHAR(20) NOT NULL,
@@ -171,7 +173,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `db1`.`casting`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db1`.`casting`;
 CREATE TABLE `db1`.`casting` (
   `actor_no` INT NOT NULL,
   `movie_no` INT NOT NULL,
