@@ -2,13 +2,10 @@ package db_info;
 
 public interface SQLStatment extends DbInfo{
 	final static String SELECT_USER_BY_ID_AND_PW_QUERY = "SELECT * FROM " + USER_TABLE + " WHERE user_id = ? AND password = ? AND is_admin = ?";
-	final static String SELECT_MOVIES_WITH_ACTOR_NAME_QUERY = "SELECT FROM " + MOVIE_TABLE + " JOIN " + CASTING_TABLE + " JOIN " + ACTOR_TABLE 
-			+ " WHERE movie_name LIKE ? AND director_name LIKE ? "
-			+ "AND actor_name LIKE ? " //배우 이름을 하나만 검색 한 경우에 대한 쿼리
-			+ "AND genre LIKE ? "
-			+ "GROUP BY movie_no ";
-	final static String SELECT_MOVIES_QUERY = "SELECT movie_no, movie_name, running_time, age_rating, director_name, genre, release_date, movie_info, rating_information, STRING_AGG(\"actor_name\", \" \") FROM " + MOVIE_TABLE + " JOIN " + CASTING_TABLE + " JOIN " + ACTOR_TABLE 
-			+ " WHERE movie_name LIKE ? AND director_name LIKE ? "
-			+ "AND genre LIKE ? "
-			+ "GROUP BY movie_no ";
+	final static String SELECT_MOVIES_WITH_ACTOR_NAME_QUERY = "SELECT A.*, GROUP_CONCAT(actor_name SEPARATOR ' ') 'actor_names'"
+			+ " FROM " + MOVIE_TABLE + " as A NATURAL JOIN " + CASTING_TABLE + " NATURAL JOIN " + ACTOR_TABLE;
+	final static String SELECT_MOVIES_QUERY = "SELECT A.*, GROUP_CONCAT(actor_name SEPARATOR ' ') 'actor_names'"
+			+ " FROM " + MOVIE_TABLE + " as A LEFT JOIN " + CASTING_TABLE + " as B ON A.movie_no = B.movie_no LEFT JOIN " + ACTOR_TABLE + " AS C ON B.actor_no = C.actor_no" //캐스팅 없어도 영화는 나오게 left 조인 해야함 -> 중복 컬럼 삭제 안됨. 
+			+ " WHERE movie_name LIKE ? AND director_name LIKE ? AND genre LIKE ?"
+			+ " GROUP BY movie_no";
 }

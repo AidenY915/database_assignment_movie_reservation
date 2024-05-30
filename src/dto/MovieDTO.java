@@ -1,7 +1,6 @@
 package dto;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +19,8 @@ public class MovieDTO {
 	public MovieDTO(int movieNo, String movieName, int runningTime, int ageRating, String directorName, String genre,
 			Date releaseDate, String movieInfo, float ratingInformation, List<String> actorNames) {
 		super();
+		if (actorNames == null)
+			actorNames = new LinkedList<String>();
 		this.movieNo = movieNo;
 		this.movieName = movieName;
 		this.runningTime = runningTime;
@@ -31,7 +32,7 @@ public class MovieDTO {
 		this.ratingInformation = ratingInformation;
 		this.actorNames = actorNames;
 	}
-	
+
 	public MovieDTO(int movieNo, String movieName, int runningTime, int ageRating, String directorName, String genre,
 			Date releaseDate, String movieInfo, float ratingInformation, String actorNames) {
 		this.movieNo = movieNo;
@@ -44,8 +45,10 @@ public class MovieDTO {
 		this.movieInfo = movieInfo;
 		this.ratingInformation = ratingInformation;
 		this.actorNames = new LinkedList<String>();
-		for(String actorName : actorNames.trim().split(" ")) {
-			this.actorNames.add(actorName);
+		if (actorNames != null) {
+			for (String actorName : actorNames.trim().split(" ")) {
+				this.actorNames.add(actorName);
+			}
 		}
 	}
 
@@ -120,10 +123,11 @@ public class MovieDTO {
 	public void setRatingInformation(float ratingInformation) {
 		this.ratingInformation = ratingInformation;
 	}
-	
+
 	public void appendActorName(String actorName) {
 		this.actorNames.add(actorName);
 	}
+
 	@Override
 	public String toString() {
 		return "movie_no : " + movieNo + ", movie_name" + movieName;

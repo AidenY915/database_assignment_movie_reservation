@@ -5,39 +5,45 @@ import javax.swing.JFrame;
 import dto.UserDTO;
 import panel.AdminLoginPanel;
 import panel.LoginChoice;
+import panel.MovieListPanel;
 import panel.MovieReservationPanel;
 import panel.RegisterPanel;
 import panel.UserLoginPanel;
 
 public class MovieReservationFrame extends JFrame {
 	final static public int WIDTH = 1000, HEIGHT = 800;
-	//싱글톤 패턴
+	// 싱글톤 패턴
 
-private UserDTO loginSession = null;
+	private UserDTO loginSession = null;
 
 	static private MovieReservationFrame movieReservationFrame;
-	
-	private MovieReservationPanel currentPanel = null; 
-	private MovieReservationPanel loginchoicepanel=new LoginChoice();
+
+	private MovieReservationPanel currentPanel = null;
+	private MovieReservationPanel loginchoicepanel = new LoginChoice();
 	private MovieReservationPanel userloginPanel = new UserLoginPanel();
-	private MovieReservationPanel adminloginpanel= new AdminLoginPanel();
+	private MovieReservationPanel adminloginpanel = new AdminLoginPanel();
 	private MovieReservationPanel registerPanel = new RegisterPanel();
-	
+	private MovieReservationPanel movieListPanel = new MovieListPanel();
+
 	public MovieReservationPanel getCurrentPanel() {
 		return currentPanel;
 	}
+
 	public MovieReservationPanel getUserLoginPanel() {
 //		0 넘어감
-		
+
 		return userloginPanel;
 	}
+
 	public MovieReservationPanel getAdminLoginPanel() {
 //		1 
 		return adminloginpanel;
-	} 
+	}
+
 	public MovieReservationPanel getRegisterPanel() {
 		return registerPanel;
 	}
+
 	public UserDTO getLoginSession() {
 		return loginSession;
 	}
@@ -45,22 +51,20 @@ private UserDTO loginSession = null;
 	public void setLoginSession(UserDTO loginSession) {
 		this.loginSession = loginSession;
 	}
-	
-	
-	
-	
-	private MovieReservationFrame(){
+
+	private MovieReservationFrame() {
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50, 50);
 		setSize(WIDTH, HEIGHT);
 		changePanel(loginchoicepanel);
+//		changePanel(movieListPanel);
 		setVisible(true);
 	}
 
 	// 싱글톤 패턴 생성자 대신 호출
 	static public MovieReservationFrame getMovieReservationFrame() {
-		if(movieReservationFrame == null)
+		if (movieReservationFrame == null)
 			movieReservationFrame = new MovieReservationFrame();
 		return movieReservationFrame;
 	}

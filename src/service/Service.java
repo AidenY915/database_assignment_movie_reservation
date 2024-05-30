@@ -38,9 +38,9 @@ public class Service {
 		return false;
 	}
 	public List<MovieDTO> getMovieList(String title, String director, String[] actorArray, String genre) {
-		if(actorArray.length != 0)
+		if(actorArray.length >= 1 && !actorArray[0].equals("")) //원소가 없어도 배열의 크기는 최소 1이기 때문
 			return dao.selectMoviesWithActorNames(title, director, actorArray, genre);
-		return null;
+		return dao.selectMovies(title, director, genre);
 	}
 }
 
