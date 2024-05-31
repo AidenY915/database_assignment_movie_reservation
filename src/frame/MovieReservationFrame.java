@@ -57,8 +57,8 @@ public class MovieReservationFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50, 50);
 		setSize(WIDTH, HEIGHT);
-		changePanel(loginchoicepanel);
-//		changePanel(movieListPanel);
+//		changePanel(loginchoicepanel);
+		changePanel(movieListPanel);
 		setVisible(true);
 	}
 
