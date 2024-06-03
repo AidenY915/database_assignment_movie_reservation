@@ -1,6 +1,12 @@
 package db_info;
 
-public interface SQLStatment extends DbInfo{
+public interface SQLStatment extends DbInfo {
+	final static String selectUserByIdAndPw = "SELECT * FROM " + USER_TABLE
+			+ " WHERE user_id = ? AND password = ? AND is_admin = ?";
+	String selectUserById = "SELECT * FROM " + USER_TABLE + " WHERE user_id = ?";
+	String insertUser = "INSERT INTO " + USER_TABLE
+			+ " (user_id, user_name, phone_no, email, password, is_admin) VALUES (?, ?, ?, ?, ?, ?)";
+
 	final static String SELECT_USER_BY_ID_AND_PW_QUERY = "SELECT * FROM " + USER_TABLE + " WHERE user_id = ? AND password = ? AND is_admin = ?";
 	final static String SELECT_MOVIES_WITH_ACTOR_NAME_QUERY = "SELECT A.*, GROUP_CONCAT(actor_name SEPARATOR ' ') 'actor_names'"
 			+ " FROM " + MOVIE_TABLE + " as A NATURAL JOIN " + CASTING_TABLE + " NATURAL JOIN " + ACTOR_TABLE;

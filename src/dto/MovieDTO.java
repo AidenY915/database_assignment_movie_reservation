@@ -133,4 +133,8 @@ public class MovieDTO {
 		return "movie_no : " + movieNo + ", movie_name" + movieName;
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 423340eac56510e719d803ba12c375580b1c02ca

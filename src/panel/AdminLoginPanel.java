@@ -87,7 +87,7 @@ public class AdminLoginPanel extends MovieReservationPanel {
 		add(loginButton);
 		loginButton.setBounds(330, 220, 330, 50);
 
-		JButton moveToRegisterButton = new MoveToRegisterButton();
+		JButton moveToRegisterButton = new MoveToRegisterButton(2);
 		add(moveToRegisterButton);
 		moveToRegisterButton.setBounds(330, 320, 330, 50);
 
@@ -122,14 +122,14 @@ public class AdminLoginPanel extends MovieReservationPanel {
 
 		private void performLogin() {
 			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-			int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(),1);
-			if (loginRslt == 0)
+			int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(), 1);
+			if (loginRslt == -1)
 				return;
-			else if (loginRslt == 1) {
+			else if (loginRslt == 0) {
 				// frame.changePanel(사용자 페이지);
 
-			} else if (loginRslt == 2) {
-				// frame.changePanel(관리자 페이지);
+			} else if (loginRslt == 1) {
+				frame.changePanel(frame.getAdminMainPanel());
 			}
 
 		}
@@ -161,27 +161,24 @@ public class AdminLoginPanel extends MovieReservationPanel {
 	};
 }
 
+
 class MoveToRegisterButton extends JButton {
 	private Service service = Service.getService();
 
-	MoveToRegisterButton() {
+	MoveToRegisterButton(int flag) {
 		super("회원가입");
 		this.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-				frame.changePanel(frame.getRegisterPanel());
+				if(flag==1) {
+					frame.changePanel(frame.getUserRegisterPanel());
+				}
+				else {
+					frame.changePanel(frame.getAdminRegisterPanel());
+				}
 
 			}
 		});
-		class TmpListener implements ActionListener {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-				frame.changePanel(frame.getRegisterPanel());
-			}
-		}
-
-		this.addActionListener(new TmpListener());
 	}
 }
