@@ -10,7 +10,7 @@ import service.Service;
 import frame.MovieReservationFrame;
 
 public class DBInitPanel extends MovieReservationPanel {
-	private Service service = Service.getService();
+	private Service service = Service.getService();;
 
 	@Override
 	public void init() {

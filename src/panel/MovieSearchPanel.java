@@ -44,10 +44,6 @@ public class MovieSearchPanel extends MovieReservationPanel{
 		titleLabel.setBounds(50 ,50,50,50);
 		
 		
-		
-
-		
-		
 	}
 
 }

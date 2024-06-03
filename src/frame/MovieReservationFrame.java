@@ -1,10 +1,12 @@
 package frame;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Stack;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import dto.UserDTO;
 import panel.AdminLoginPanel;
 import panel.AdminMainPanel;
@@ -13,11 +15,12 @@ import panel.DBInitPanel;
 import panel.DBManipulationPanel;
 import panel.DBModifyPanel;
 import panel.LoginChoice;
+import panel.MovieDetailPanel;
+import panel.MovieListPanel;
 import panel.MovieReservationPanel;
-import panel.UserRegisterPanel;
-import panel.UserLoginPanel;
 import panel.TableSelectionPanel;
-import panel.TableViewPanel;
+import panel.UserLoginPanel;
+import panel.UserRegisterPanel;
 
 public class MovieReservationFrame extends JFrame {
     final static public int WIDTH = 1000, HEIGHT = 800;
@@ -34,6 +37,8 @@ public class MovieReservationFrame extends JFrame {
     private MovieReservationPanel dbModifyPanel = new DBModifyPanel();
     private MovieReservationPanel dbManipulationPanel = new DBManipulationPanel();
     private MovieReservationPanel tableSelectionPanel = new TableSelectionPanel();
+    private MovieReservationPanel movieListPanel = new MovieListPanel();
+	private MovieReservationPanel movieDetailPanel = new MovieDetailPanel();
     private Stack<MovieReservationPanel> panelStack = new Stack<>();
     private JButton backButton;
 
@@ -80,16 +85,27 @@ public class MovieReservationFrame extends JFrame {
     public MovieReservationPanel getTableSelectionPanel() {
         return tableSelectionPanel;
     }
+    
+    public MovieReservationPanel getMovieListPanel() {
+    	return movieListPanel;
+    }
+    
+    public MovieReservationPanel getMovieDetailPanel() {
+		return movieDetailPanel;
+	}
 
     public UserDTO getLoginSession() {
         return loginSession;
     }
 
-    public void setLoginSession(UserDTO loginSession) {
-        this.loginSession = loginSession;
-    }
-
-    private MovieReservationFrame() {
+	public void setLoginSession(UserDTO loginSession) {
+		this.loginSession = loginSession;
+	}
+	
+	
+	
+	
+	private MovieReservationFrame() {
         super();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocation(50, 50);
@@ -109,11 +125,12 @@ public class MovieReservationFrame extends JFrame {
         setVisible(true);
     }
 
-    static public MovieReservationFrame getMovieReservationFrame() {
-        if (movieReservationFrame == null)
-            movieReservationFrame = new MovieReservationFrame();
-        return movieReservationFrame;
-    }
+	// 싱글톤 패턴 생성자 대신 호출
+	static public MovieReservationFrame getMovieReservationFrame() {
+		if(movieReservationFrame == null)
+			movieReservationFrame = new MovieReservationFrame();
+		return movieReservationFrame;
+	}
 
     public void changePanel(MovieReservationPanel nextPanel) {
         if (currentPanel != null) {

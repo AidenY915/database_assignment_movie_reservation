@@ -1,7 +1,7 @@
 USE db1;
 
-INSERT INTO user VALUES("user1", "사용자1", "01000000000", "user1@naver.com", "user1", "0");
-INSERT INTO user VALUES("root", "관리자", "01011111111", "root@naver.com", "1234", "1");
+INSERT INTO user VALUES("user1", "사용자1", "01000000000", "user1@naver.com", "user1", 0);
+INSERT INTO user VALUES("root", "관리자", "01011111111", "root@naver.com", "1234", 1);
 
 INSERT INTO movie(movie_name, running_time, age_rating, director_name, genre, release_date, movie_info, rating_information) VALUES('퓨리오사: 매드맥스 사가', 148, 15, '조지 밀러', '액션', '2024-05-22', '문명 붕괴 45년 후,
 황폐해진 세상 속 누구에게도 알려지지 않은

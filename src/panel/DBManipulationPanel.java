@@ -11,11 +11,10 @@ import service.Service;
 public class DBManipulationPanel extends MovieReservationPanel {
 
 	private JTextArea sqlArea;
-	private Service service = Service.getService();
+	private Service service = Service.getService();;
 
 	public DBManipulationPanel() {
 		super();
-		init();
 	}
 
 	@Override

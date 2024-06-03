@@ -11,4 +11,6 @@ public interface DbInfo {
 	
 	final static String USER_TABLE = "user";
 	final static String MOVIE_TABLE = "movie";
+	final static String CASTING_TABLE = "casting";
+	final static String ACTOR_TABLE = "actor";
 }
