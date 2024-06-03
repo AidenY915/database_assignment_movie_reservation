@@ -46,7 +46,7 @@ public class MovieDTO {
 		this.ratingInformation = ratingInformation;
 		this.actorNames = new LinkedList<String>();
 		if (actorNames != null) {
-			for (String actorName : actorNames.trim().split(" ")) {
+			for (String actorName : actorNames.trim().split(",")) {
 				this.actorNames.add(actorName);
 			}
 		}
@@ -133,7 +133,7 @@ public class MovieDTO {
 
 	@Override
 	public String toString() {
-		return "movie_no : " + movieNo + ", movie_name" + movieName;
+		return movieName;
 	}
 
 }

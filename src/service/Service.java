@@ -58,6 +58,9 @@ public class Service {
 			return dao.selectMoviesWithActorNames(title, director, actorArray, genre);
 		return dao.selectMovies(title, director, genre);
 	}
+	public List<MovieDTO> getAllMovies() {
+		return dao.selectMovies("", "", "");
+	}
 }
 
 

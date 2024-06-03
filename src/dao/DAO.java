@@ -82,8 +82,11 @@ public class DAO implements DbInfo, SQLStatment {
 				selectMoviesStmt.setString(3, "%" + genre + "%");
 			try (ResultSet rs = selectMoviesStmt.executeQuery()) {
 				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
-//					MovieDTO movie = new MovieDTO();
-					rsltMovies.add(null);
+					MovieDTO movieDTO = new MovieDTO(rs.getInt("movie_no"), rs.getString("movie_name"),
+							rs.getInt("running_time"), rs.getInt("age_rating"), rs.getString("director_name"),
+							rs.getString("genre"), rs.getDate("release_date"), rs.getString("movie_info"),
+							rs.getFloat("rating_information"), rs.getString("actor_names"));
+					rsltMovies.add(movieDTO);
 				}
 				// 마지막에 배우 이름 다 안들어 간 거 삭제
 			}
