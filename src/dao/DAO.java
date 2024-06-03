@@ -107,10 +107,18 @@ public class DAO implements DbInfo, SQLStatment {
 							rs.getString("genre"), rs.getDate("release_date"), rs.getString("movie_info"),
 							rs.getFloat("rating_information"), rs.getString("actor_names"));
 					rsltMovies.add(movieDTO);
+				}
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rsltMovies;
+	}
+			
 	public UserDTO selectUserById(String id) {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		UserDTO rsltUserDTO = null;
-		try (Connection conn = DriverManager.getConnection(databaseUrl, USER_ID, USER_PW);
+		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				PreparedStatement selectUserByIdStmt = conn.prepareStatement(selectUserById);) {
 			selectUserByIdStmt.setString(1, id);
 			try (ResultSet rs = selectUserByIdStmt.executeQuery()) {
@@ -128,7 +136,7 @@ public class DAO implements DbInfo, SQLStatment {
 
 	public boolean insertUser(UserDTO user) {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
-		try (Connection conn = DriverManager.getConnection(databaseUrl, USER_ID, USER_PW);
+		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				PreparedStatement insertUserStmt = conn.prepareStatement(insertUser);) {
 			insertUserStmt.setString(1, user.getId());
 			insertUserStmt.setString(2, user.getUserName());
@@ -220,7 +228,7 @@ public class DAO implements DbInfo, SQLStatment {
 				"SET SQL_MODE=@OLD_SQL_MODE;", "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;",
 				"SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;" };
 
-		try (Connection conn = DriverManager.getConnection(databaseUrl, USER_ID, USER_PW);
+		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				Statement stmt = conn.createStatement()) {
 
 			for (String sql : sqlStatements) {
@@ -237,7 +245,7 @@ public class DAO implements DbInfo, SQLStatment {
 
 	public boolean executeSQL(String sql) {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
-		try (Connection conn = DriverManager.getConnection(databaseUrl, USER_ID, USER_PW);
+		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 			
 			System.out.println(sql);
@@ -253,7 +261,7 @@ public class DAO implements DbInfo, SQLStatment {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		StringBuilder result = new StringBuilder();
 
-		try (Connection conn = DriverManager.getConnection(databaseUrl, USER_ID, USER_PW);
+		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + tableName);
 				ResultSet rs = stmt.executeQuery()) {
 
@@ -291,7 +299,7 @@ public class DAO implements DbInfo, SQLStatment {
         query.setLength(query.length() - 2);
         query.append(")");
 
-        try (Connection conn = DriverManager.getConnection(databaseUrl, USER_ID, USER_PW);
+        try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
             for (int i = 0; i < values.length; i++) {
                 stmt.setString(i + 1, values[i]);

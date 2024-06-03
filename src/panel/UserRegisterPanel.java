@@ -84,7 +84,7 @@ public class UserRegisterPanel extends MovieReservationPanel {
         registerButton.addKeyListener(registerKeyListener);
     }
 
-    public class IdCheckButton extends JButton {
+    public static class IdCheckButton extends JButton {
         private JTextField idTextField;
         private Service service = Service.getService();
         private boolean isIdChecked = false;
@@ -117,7 +117,7 @@ public class UserRegisterPanel extends MovieReservationPanel {
         }
     }
 
-    public class RegisterButton extends JButton {
+    public static class RegisterButton extends JButton {
         private JTextField idTextField;
         private JTextField passwordTextField;
         private JTextField passwordCheckField;

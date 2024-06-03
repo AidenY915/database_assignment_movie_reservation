@@ -1,5 +1,7 @@
 package frame;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -84,6 +86,10 @@ public class MovieReservationFrame extends JFrame {
         return tableSelectionPanel;
     }
     
+    public MovieReservationPanel getMovieListPanel() {
+    	return movieListPanel;
+    }
+    
     public MovieReservationPanel getMovieDetailPanel() {
 		return movieDetailPanel;
 	}
@@ -99,14 +105,25 @@ public class MovieReservationFrame extends JFrame {
 	
 	
 	
-	private MovieReservationFrame(){
-		super();
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocation(50, 50);
-		setSize(WIDTH, HEIGHT);
-		changePanel(loginChoicePanel);
-		setVisible(true);
-	}
+	private MovieReservationFrame() {
+        super();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocation(50, 50);
+        setSize(WIDTH, HEIGHT);
+
+        backButton = new JButton("뒤로 가기");
+        backButton.setBounds(10, 10, 100, 30);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goBack();
+            }
+        });
+        add(backButton);
+
+        changePanel(loginChoicePanel);
+        setVisible(true);
+    }
 
 	// 싱글톤 패턴 생성자 대신 호출
 	static public MovieReservationFrame getMovieReservationFrame() {

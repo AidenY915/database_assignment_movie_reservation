@@ -11,19 +11,22 @@ public class Service {
 	private DAO dao = DAO.getDAO();
 	private MovieReservationFrame frame;
 	
-	private static Service service = new Service();
+	private static Service service;
 	private Service() {
 	}
-	public static Service getService() {return service;}
+	public static Service getService() {
+		if(service == null )
+			 service = new Service();
+		return service;}
 	
 	public int login(String id, String pw, int isAdmin) { // -1이면 로그인 실패, 0이면 사용자 로그인, 1면 관리자 로그인
 		if(frame == null) {
 			frame = MovieReservationFrame.getMovieReservationFrame();
 		}
 		UserDTO userDTO = dao.selectUserByIdAndPw(id, pw, isAdmin); 
-		if(userDTO == null) return 0;
+		if(userDTO == null) return -1;
 		frame.setLoginSession(userDTO);
-		return frame.getLoginSession().isAdmin();
+		return userDTO.isAdmin();
 	}
 	public boolean register(String id, String password,String userName,String phoneNo,String email,int isAdmin) { 
 		if(isIdDuplicated(id)) return false;

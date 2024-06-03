@@ -18,7 +18,8 @@ public class DataInputPanel extends MovieReservationPanel {
 	private String[] currentColumns;
 	private JComboBox<String> tableComboBox;
 	private JPanel inputPanel;
-
+	private Service service = Service.getService();
+	
 	public DataInputPanel() {
 		super();
 		init();
@@ -133,7 +134,6 @@ public class DataInputPanel extends MovieReservationPanel {
 		for (int i = 0; i < inputFields.length; i++) {
 			values[i] = inputFields[i].getText();
 		}
-		Service service = Service.getService();
 		if (service.insertData((String) tableComboBox.getSelectedItem(), currentColumns, values)) {
 			JOptionPane.showMessageDialog(this, "데이터가 저장되었습니다.");
 		} else {

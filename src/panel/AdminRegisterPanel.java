@@ -2,12 +2,12 @@ package panel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-import service.Service;
-import frame.MovieReservationFrame;
+
+import panel.UserRegisterPanel.IdCheckButton;
 
 public class AdminRegisterPanel extends MovieReservationPanel {
 
@@ -64,11 +64,11 @@ public class AdminRegisterPanel extends MovieReservationPanel {
         emailLabel.setBounds(350, 380, 80, 15);
         emailField.setBounds(450, 370, 200, 30);
 
-        UserRegisterPanel.IdCheckButton idCheckButton = new UserRegisterPanel().new IdCheckButton(idTextField);
+        UserRegisterPanel.IdCheckButton idCheckButton = new UserRegisterPanel.IdCheckButton(idTextField);
         add(idCheckButton);
         idCheckButton.setBounds(700, 120, 130, 30);
 
-        UserRegisterPanel.RegisterButton registerButton = new UserRegisterPanel().new RegisterButton(idTextField, passwordTextField, passwordCheckField, userNameField, phoneNoField, emailField, flag, idCheckButton);
+        UserRegisterPanel.RegisterButton registerButton = new UserRegisterPanel.RegisterButton(idTextField, passwordTextField, passwordCheckField, userNameField, phoneNoField, emailField, flag, idCheckButton);
         add(registerButton);
         registerButton.setBounds(350, 450, 300, 50);
 

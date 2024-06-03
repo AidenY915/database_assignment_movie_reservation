@@ -23,7 +23,7 @@ import frame.MovieReservationFrame;
 import service.Service;
 
 public class MovieListPanel extends MovieReservationPanel {
-	private Service service;
+	private Service service = Service.getService();
 	private List<MovieDTO> movieList;
 	private MovieListScrollPane currentMovieListScrollpane;
 
@@ -80,7 +80,6 @@ public class MovieListPanel extends MovieReservationPanel {
 		searchButton.setBounds(440, 150, 100, 50);
 
 		// 검색
-		service = Service.getService();
 		searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(),
 				genreField.getText());
 

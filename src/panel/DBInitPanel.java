@@ -10,11 +10,10 @@ import service.Service;
 import frame.MovieReservationFrame;
 
 public class DBInitPanel extends MovieReservationPanel {
-	private Service service;
+	private Service service = Service.getService();;
 
 	@Override
 	public void init() {
-		service = Service.getService();
 		removeAll();
 		setLayout(null);
 

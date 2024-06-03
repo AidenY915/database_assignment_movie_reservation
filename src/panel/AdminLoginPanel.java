@@ -1,8 +1,5 @@
 package panel;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -123,10 +120,7 @@ public class AdminLoginPanel extends MovieReservationPanel {
 			int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(), 1);
 			if (loginRslt == -1)
 				return;
-			else if (loginRslt == 0) {
-				// frame.changePanel(사용자 페이지);
-
-			} else if (loginRslt == 1) {
+			else if (loginRslt == 1) {
 				frame.changePanel(frame.getAdminMainPanel());
 			}
 
@@ -161,8 +155,6 @@ public class AdminLoginPanel extends MovieReservationPanel {
 
 
 class MoveToRegisterButton extends JButton {
-	private Service service = Service.getService();
-
 	MoveToRegisterButton(int flag) {
 		super("회원가입");
 		this.addActionListener(new ActionListener() {
