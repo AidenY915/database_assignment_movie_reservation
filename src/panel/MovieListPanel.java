@@ -79,7 +79,6 @@ public class MovieListPanel extends MovieReservationPanel {
 		add(searchButton);
 		searchButton.setBounds(440, 150, 100, 50);
 
-		// 검색
 		searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(),
 				genreField.getText());
 

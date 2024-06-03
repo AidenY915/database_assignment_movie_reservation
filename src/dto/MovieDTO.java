@@ -124,6 +124,9 @@ public class MovieDTO {
 		this.ratingInformation = ratingInformation;
 	}
 
+	public List<String> getActorNames() {
+        return actorNames;
+    }
 	public void appendActorName(String actorName) {
 		this.actorNames.add(actorName);
 	}

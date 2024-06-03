@@ -18,6 +18,7 @@ import panel.LoginChoice;
 import panel.MovieDetailPanel;
 import panel.MovieListPanel;
 import panel.MovieReservationPanel;
+import panel.ReservationPanel;
 import panel.TableSelectionPanel;
 import panel.UserLoginPanel;
 import panel.UserRegisterPanel;
@@ -39,6 +40,7 @@ public class MovieReservationFrame extends JFrame {
     private MovieReservationPanel tableSelectionPanel = new TableSelectionPanel();
     private MovieReservationPanel movieListPanel = new MovieListPanel();
 	private MovieReservationPanel movieDetailPanel = new MovieDetailPanel();
+	private MovieReservationPanel reservationPanel = new ReservationPanel();
     private Stack<MovieReservationPanel> panelStack = new Stack<>();
     private JButton backButton;
 
@@ -93,8 +95,12 @@ public class MovieReservationFrame extends JFrame {
     public MovieReservationPanel getMovieDetailPanel() {
 		return movieDetailPanel;
 	}
+    
+    public MovieReservationPanel getReservationPanel() {
+		return reservationPanel;
+	}
 
-    public UserDTO getLoginSession() {
+	public UserDTO getLoginSession() {
         return loginSession;
     }
 
