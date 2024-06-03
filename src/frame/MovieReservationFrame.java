@@ -1,80 +1,142 @@
 package frame;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Stack;
 import dto.UserDTO;
 import panel.AdminLoginPanel;
+import panel.AdminMainPanel;
+import panel.AdminRegisterPanel;
+import panel.DBInitPanel;
+import panel.DBManipulationPanel;
+import panel.DBModifyPanel;
 import panel.LoginChoice;
 import panel.MovieReservationPanel;
-import panel.RegisterPanel;
+import panel.UserRegisterPanel;
 import panel.UserLoginPanel;
+import panel.TableSelectionPanel;
+import panel.TableViewPanel;
 
 public class MovieReservationFrame extends JFrame {
-	final static public int WIDTH = 1000, HEIGHT = 800;
-	//싱글톤 패턴
+    final static public int WIDTH = 1000, HEIGHT = 800;
+    private UserDTO loginSession = null;
+    private static MovieReservationFrame movieReservationFrame;
+    private MovieReservationPanel currentPanel = null;
+    private MovieReservationPanel loginChoicePanel = new LoginChoice();
+    private MovieReservationPanel userLoginPanel = new UserLoginPanel();
+    private MovieReservationPanel adminLoginPanel = new AdminLoginPanel();
+    private MovieReservationPanel userRegisterPanel = new UserRegisterPanel();
+    private MovieReservationPanel adminRegisterPanel = new AdminRegisterPanel();
+    private MovieReservationPanel adminMainPanel = new AdminMainPanel();
+    private MovieReservationPanel dbInitPanel = new DBInitPanel();
+    private MovieReservationPanel dbModifyPanel = new DBModifyPanel();
+    private MovieReservationPanel dbManipulationPanel = new DBManipulationPanel();
+    private MovieReservationPanel tableSelectionPanel = new TableSelectionPanel();
+    private Stack<MovieReservationPanel> panelStack = new Stack<>();
+    private JButton backButton;
 
-private UserDTO loginSession = null;
+    public MovieReservationPanel getCurrentPanel() {
+        return currentPanel;
+    }
 
-	static private MovieReservationFrame movieReservationFrame;
-	
-	private MovieReservationPanel currentPanel = null; 
-	private MovieReservationPanel loginchoicepanel=new LoginChoice();
-	private MovieReservationPanel userloginPanel = new UserLoginPanel();
-	private MovieReservationPanel adminloginpanel= new AdminLoginPanel();
-	private MovieReservationPanel registerPanel = new RegisterPanel();
-	
-	public MovieReservationPanel getCurrentPanel() {
-		return currentPanel;
-	}
-	public MovieReservationPanel getUserLoginPanel() {
-//		0 넘어감
-		
-		return userloginPanel;
-	}
-	public MovieReservationPanel getAdminLoginPanel() {
-//		1 
-		return adminloginpanel;
-	} 
-	public MovieReservationPanel getRegisterPanel() {
-		return registerPanel;
-	}
-	public UserDTO getLoginSession() {
-		return loginSession;
-	}
+    public MovieReservationPanel getLoginChoicePanel() {
+    	return loginChoicePanel;
+    }
+    
+    public MovieReservationPanel getUserLoginPanel() {
+        return userLoginPanel;
+    }
 
-	public void setLoginSession(UserDTO loginSession) {
-		this.loginSession = loginSession;
-	}
-	
-	
-	
-	
-	private MovieReservationFrame(){
-		super();
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocation(50, 50);
-		setSize(WIDTH, HEIGHT);
-		changePanel(loginchoicepanel);
-		setVisible(true);
-	}
+    public MovieReservationPanel getAdminLoginPanel() {
+        return adminLoginPanel;
+    }
 
-	// 싱글톤 패턴 생성자 대신 호출
-	static public MovieReservationFrame getMovieReservationFrame() {
-		if(movieReservationFrame == null)
-			movieReservationFrame = new MovieReservationFrame();
-		return movieReservationFrame;
-	}
+    public MovieReservationPanel getUserRegisterPanel() {
+        return userRegisterPanel;
+    }
 
-	public void changePanel(MovieReservationPanel nextPanel) {
-		if (currentPanel != null) {
-			getContentPane().remove(currentPanel); // 왜 안먹지? 왜 중복돼서 아무것도 안나오지?
-		}
-		nextPanel.init();
-		getContentPane().add(nextPanel);
-		nextPanel.setVisible(true);
-		currentPanel = nextPanel;
-		revalidate(); // 레이아웃 관리자에게 컴포넌트 변경 사항을 알림
-		repaint();
-	}
+    public MovieReservationPanel getAdminRegisterPanel() {
+        return adminRegisterPanel;
+    }
 
+    public MovieReservationPanel getAdminMainPanel() {
+        return adminMainPanel;
+    }
+
+    public MovieReservationPanel getDbInitPanel() {
+        return dbInitPanel;
+    }
+
+    public MovieReservationPanel getDbModifyPanel() {
+        return dbModifyPanel;
+    }
+
+    public MovieReservationPanel getDbManipulationPanel() {
+        return dbManipulationPanel;
+    }
+
+    public MovieReservationPanel getTableSelectionPanel() {
+        return tableSelectionPanel;
+    }
+
+    public UserDTO getLoginSession() {
+        return loginSession;
+    }
+
+    public void setLoginSession(UserDTO loginSession) {
+        this.loginSession = loginSession;
+    }
+
+    private MovieReservationFrame() {
+        super();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocation(50, 50);
+        setSize(WIDTH, HEIGHT);
+
+        backButton = new JButton("뒤로 가기");
+        backButton.setBounds(10, 10, 100, 30);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goBack();
+            }
+        });
+        add(backButton);
+
+        changePanel(loginChoicePanel);
+        setVisible(true);
+    }
+
+    static public MovieReservationFrame getMovieReservationFrame() {
+        if (movieReservationFrame == null)
+            movieReservationFrame = new MovieReservationFrame();
+        return movieReservationFrame;
+    }
+
+    public void changePanel(MovieReservationPanel nextPanel) {
+        if (currentPanel != null) {
+            getContentPane().remove(currentPanel);
+            panelStack.push(currentPanel);
+        }
+        nextPanel.init();
+        getContentPane().add(nextPanel);
+        nextPanel.setVisible(true);
+        currentPanel = nextPanel;
+        revalidate();
+        repaint();
+    }
+
+    public void goBack() {
+        if (!panelStack.isEmpty()) {
+            MovieReservationPanel previousPanel = panelStack.pop();
+            getContentPane().remove(currentPanel);
+            getContentPane().add(previousPanel);
+            previousPanel.setVisible(true);
+            currentPanel = previousPanel;
+            revalidate();
+            repaint();
+        }
+    }
 }

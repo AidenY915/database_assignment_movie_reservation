@@ -85,7 +85,7 @@ public class UserLoginPanel extends MovieReservationPanel {
 		add(loginButton);
 		loginButton.setBounds(330, 220, 330, 50);
 
-		JButton moveToRegisterButton = new MoveToRegisterButton();
+		JButton moveToRegisterButton = new MoveToRegisterButton(1);
 		add(moveToRegisterButton);
 		moveToRegisterButton.setBounds(330, 320, 330, 50);
 

@@ -22,18 +22,31 @@ public class Service {
 		frame.setLoginSession(userDTO);
 		return frame.getLoginSession().isAdmin();
 	}
-	public boolean register(String id, String password,String userName,String phoneNo,String email) { 
+	public boolean register(String id, String password,String userName,String phoneNo,String email,int isAdmin) { 
 		if(isIdDuplicated(id)) return false;
 		
-//		아이디 등록
-		return true;
+		UserDTO newUser = new UserDTO(id,userName,phoneNo,email,password,isAdmin);
+		return dao.insertUser(newUser);
 		
 		
 	}
 	public boolean isIdDuplicated(String id) {
-//		아이디 중복 확인,
-		return false;
+		return dao.selectUserById(id) != null;
 	}
+	public boolean initializeDatabase() {
+        return dao.initializeDatabase();
+    }
+
+	public boolean insertData(String tableName, String[] columns, String[] values) {
+        return dao.insertData(tableName, columns, values);
+    }
+    public boolean executeSQL(String sql) {
+        return dao.executeSQL(sql);
+    }
+
+    public String viewTableData(String tableName) {
+        return dao.viewTableData(tableName);
+    }
 }
 
 
