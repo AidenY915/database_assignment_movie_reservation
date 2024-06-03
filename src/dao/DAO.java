@@ -209,11 +209,14 @@ public class DAO implements DbInfo, SQLStatment {
 
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columnCount = metaData.getColumnCount();
+
+			
 			for (int i = 1; i <= columnCount; i++) {
 				result.append(metaData.getColumnName(i)).append("\t");
 			}
 			result.append("\n");
 
+		
 			while (rs.next()) {
 				for (int i = 1; i <= columnCount; i++) {
 					result.append(rs.getString(i)).append("\t");
