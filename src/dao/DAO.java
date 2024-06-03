@@ -24,7 +24,7 @@ public class DAO implements DbInfo, SQLStatment {
 	private DAO() {
 	}
 
-	public static DAO dao = new DAO();
+	private static DAO dao = new DAO();
 
 	public static DAO getDAO() {
 		return dao;

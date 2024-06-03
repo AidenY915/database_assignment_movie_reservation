@@ -15,7 +15,6 @@ public class UserRegisterPanel extends MovieReservationPanel {
 
     public UserRegisterPanel() {
         super();
-        init();
     }
 
     @Override

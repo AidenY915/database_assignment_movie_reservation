@@ -13,7 +13,6 @@ public class AdminRegisterPanel extends MovieReservationPanel {
 
     public AdminRegisterPanel() {
         super();
-        init();
     }
 
     @Override

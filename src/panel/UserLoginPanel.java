@@ -17,8 +17,6 @@ import service.Service;
 public class UserLoginPanel extends MovieReservationPanel {
 	public UserLoginPanel() {
 		super();
-		init();
-
 	}
 
 	@Override

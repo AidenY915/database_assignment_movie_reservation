@@ -1,10 +1,10 @@
 package frame;
 
+import java.util.Stack;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Stack;
+
 import dto.UserDTO;
 import panel.AdminLoginPanel;
 import panel.AdminMainPanel;
@@ -16,10 +16,9 @@ import panel.LoginChoice;
 import panel.MovieDetailPanel;
 import panel.MovieListPanel;
 import panel.MovieReservationPanel;
-import panel.UserRegisterPanel;
-import panel.UserLoginPanel;
 import panel.TableSelectionPanel;
-import panel.TableViewPanel;
+import panel.UserLoginPanel;
+import panel.UserRegisterPanel;
 
 public class MovieReservationFrame extends JFrame {
     final static public int WIDTH = 1000, HEIGHT = 800;
@@ -105,7 +104,7 @@ public class MovieReservationFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50, 50);
 		setSize(WIDTH, HEIGHT);
-		changePanel(loginchoicepanel);
+		changePanel(loginChoicePanel);
 		setVisible(true);
 	}
 
