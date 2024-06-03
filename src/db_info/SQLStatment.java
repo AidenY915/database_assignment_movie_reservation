@@ -14,4 +14,8 @@ public interface SQLStatment extends DbInfo {
 			+ " FROM " + MOVIE_TABLE + " as A LEFT JOIN " + CASTING_TABLE + " as B ON A.movie_no = B.movie_no LEFT JOIN " + ACTOR_TABLE + " AS C ON B.actor_no = C.actor_no" //캐스팅 없어도 영화는 나오게 left 조인 해야함 -> 중복 컬럼 삭제 안됨. 
 			+ " WHERE movie_name LIKE ? AND director_name LIKE ? AND genre LIKE ?"
 			+ " GROUP BY movie_no";
+	
+	final static String SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO = "SELECT A.*, standard_price"
+			+ " FROM " + SCREENING_SCHEDULE_TABLE + " AS A INNER JOIN " + SCREENING_HALL_TABLE + " AS B ON A.hall_no = B.hall_no"
+			+ " WHERE movie_no = ?"; 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.DAO;
 import dto.MovieDTO;
+import dto.ScreeningScheduleDTO;
 import dto.UserDTO;
 import frame.MovieReservationFrame;
 
@@ -60,6 +61,10 @@ public class Service {
 	}
 	public List<MovieDTO> getAllMovies() {
 		return dao.selectMovies("", "", "");
+	}
+	public List<ScreeningScheduleDTO> getScheduleListByMovieNo(MovieDTO movieDTO) {
+		int movieNo = movieDTO.getMovieNo();
+		return dao.selectSchedulesByMovieNo(movieNo);
 	}
 }
 

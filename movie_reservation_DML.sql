@@ -13,8 +13,16 @@ INSERT INTO movie(movie_name, running_time, age_rating, director_name, genre, re
 ‘매드맥스’ 시리즈의 전설적인 사령관 ‘퓨리오사’의 대서사시
 5월 22일, 마침내 분노가 깨어난다!', 4.5);
 
-INSERT INTO actor(actor_name) values("크리스 햄스워드");
-INSERT INTO actor(actor_name) values("안야 테일러 조이");
+INSERT INTO actor(actor_name) VALUES("크리스 햄스워드");
+INSERT INTO actor(actor_name) VALUES("안야 테일러 조이");
 
-INSERT INTO casting values(1,1);
-INSERT INTO casting values(2,1);
+INSERT INTO casting VALUES(1,1);
+INSERT INTO casting VALUES(2,1);
+
+INSERT INTO screening_hall VALUES(NULL, 10000, "1관");
+INSERT INTO screening_hall VALUES(NULL, 10000, "2관");
+INSERT INTO screening_hall VALUES(NULL, 10000, "3관");
+
+INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(1, '2024-06-03', 'MON', 1, '13:00', 1);
+INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(3, '2024-06-05', 'WEN', 2, '12:00', 1);
+INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(2, '2024-06-04', 'TUE', 2, '15:00', 1);

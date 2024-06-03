@@ -6,13 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import java.sql.Statement;
 
 import db_info.DbInfo;
 import db_info.SQLStatment;
 import dto.MovieDTO;
+import dto.ScreeningScheduleDTO;
 import dto.UserDTO;
 
 public class DAO implements DbInfo, SQLStatment {
@@ -314,5 +315,22 @@ public class DAO implements DbInfo, SQLStatment {
             return false;
         }
     }
+
+	public List<ScreeningScheduleDTO> selectSchedulesByMovieNo(int movieNo) {
+		List<ScreeningScheduleDTO> rsltSchedules = new LinkedList<>();
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement selectSchedulesStmt = conn.prepareStatement(SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO);) {
+				selectSchedulesStmt.setInt(1, movieNo);
+			try (ResultSet rs = selectSchedulesStmt.executeQuery()) {
+				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+					ScreeningScheduleDTO ScreeningScheduleDTO = new ScreeningScheduleDTO(rs.getInt("schedule_no"), rs.getInt("hall_no"), rs.getDate("screening_date"), rs.getString("screening_date"), rs.getInt("screening_session"), rs.getTime("screening_start_time"), rs.getInt("movie_no"), rs.getInt("standard_price"));
+					rsltSchedules.add(ScreeningScheduleDTO);
+				}
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rsltSchedules;
+	}
 
 }
