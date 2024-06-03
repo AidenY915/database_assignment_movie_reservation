@@ -104,6 +104,7 @@ public class MovieListPanel extends MovieReservationPanel {
 
 	void searchMovieList(String title, String director, String actor, String genre) {
 		movieList = getMovieList(title, director, actor, genre);
+		System.out.println(movieList);
 		if (currentMovieListScrollpane != null)
 			this.remove(currentMovieListScrollpane);
 		currentMovieListScrollpane = new MovieListScrollPane(movieList);

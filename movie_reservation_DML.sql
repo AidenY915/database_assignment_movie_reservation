@@ -12,3 +12,9 @@ INSERT INTO movie(movie_name, running_time, age_rating, director_name, genre, re
 인생 전부를 건 복수를 시작하는데...
 ‘매드맥스’ 시리즈의 전설적인 사령관 ‘퓨리오사’의 대서사시
 5월 22일, 마침내 분노가 깨어난다!', 4.5);
+
+INSERT INTO actor(actor_name) values("크리스 햄스워드");
+INSERT INTO actor(actor_name) values("안야 테일러 조이");
+
+INSERT INTO casting values(1,1);
+INSERT INTO casting values(2,1);

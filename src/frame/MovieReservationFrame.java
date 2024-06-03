@@ -109,8 +109,6 @@ public class MovieReservationFrame extends JFrame {
 	}
 	
 	
-	
-	
 	private MovieReservationFrame() {
         super();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
