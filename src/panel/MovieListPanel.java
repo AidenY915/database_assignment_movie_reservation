@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -24,7 +26,7 @@ public class MovieListPanel extends MovieReservationPanel {
 	private Service service;
 	private List<MovieDTO> movieList;
 	private MovieListScrollPane currentMovieListScrollpane;
-	
+
 	public MovieListPanel() {
 	}
 
@@ -72,14 +74,15 @@ public class MovieListPanel extends MovieReservationPanel {
 		genre.setBounds(750, 70, 80, 50);
 		genreField.setBounds(810, 75, 140, 40);
 
-		SearchButton searchButton = new SearchButton(this ,movieNameField, directorNameField, actorNameField, genreField);
+		SearchButton searchButton = new SearchButton(this, movieNameField, directorNameField, actorNameField,
+				genreField);
 		add(searchButton);
 		searchButton.setBounds(440, 150, 100, 50);
 
-		//검색
+		// 검색
 		service = Service.getService();
-		searchMovieList(movieNameField.getText(), directorNameField.getText(),actorNameField.getText(),genreField.getText());
-		
+		searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(),
+				genreField.getText());
 
 	}
 
@@ -99,10 +102,10 @@ public class MovieListPanel extends MovieReservationPanel {
 			return service.getMovieList(title, director, actorArray, genre);
 		}
 	}
-	
+
 	void searchMovieList(String title, String director, String actor, String genre) {
 		movieList = getMovieList(title, director, actor, genre);
-		if(currentMovieListScrollpane != null)
+		if (currentMovieListScrollpane != null)
 			this.remove(currentMovieListScrollpane);
 		currentMovieListScrollpane = new MovieListScrollPane(movieList);
 		add(currentMovieListScrollpane);
@@ -153,7 +156,7 @@ class MovieDTOPanel extends JPanel {
 		JLabel movieNameLabel = new JLabel(movieDTO.getMovieName());
 
 		add(movieNameLabel);
-
+		addMouseListener(new moveToDetailClickListener(movieDTO));
 	}
 
 	@Override
@@ -161,6 +164,38 @@ class MovieDTOPanel extends JPanel {
 		super.paint(g);
 		g.setColor(Color.BLACK);
 		g.drawRect(5, 5, WIDTH - 10, HEIGHT - 10);
+	}
+
+	class moveToDetailClickListener implements MouseListener {
+		private MovieDTO movieDTO;
+
+		moveToDetailClickListener(MovieDTO movieDTO) {
+			this.movieDTO = movieDTO;
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+			MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
+			movieDetailPanel.setMovieDTO(movieDTO);
+			frame.changePanel(movieDetailPanel);
+		}
 	}
 }
 
@@ -171,20 +206,22 @@ class SearchButton extends JButton {
 	private JTextField actorNameField;
 	private JTextField genreField;
 
-	SearchButton(MovieListPanel movieListPanel, JTextField movieNameField,JTextField directorNameField,JTextField actorNameField,JTextField genreField){
-        super("영화 검색");
-        this.movieListPanel = movieListPanel;
-        this.movieNameField=movieNameField;
-        this.directorNameField=directorNameField;
-        this.actorNameField=actorNameField;
-        this.genreField=genreField;
+	SearchButton(MovieListPanel movieListPanel, JTextField movieNameField, JTextField directorNameField,
+			JTextField actorNameField, JTextField genreField) {
+		super("영화 검색");
+		this.movieListPanel = movieListPanel;
+		this.movieNameField = movieNameField;
+		this.directorNameField = directorNameField;
+		this.actorNameField = actorNameField;
+		this.genreField = genreField;
 
-        this.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	movieListPanel.searchMovieList(movieNameField.getText(), directorNameField.getText(),actorNameField.getText(),genreField.getText());
-            }
+		this.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				movieListPanel.searchMovieList(movieNameField.getText(), directorNameField.getText(),
+						actorNameField.getText(), genreField.getText());
+			}
 
-        });
+		});
 	}
 }

@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import dto.UserDTO;
 import panel.AdminLoginPanel;
 import panel.LoginChoice;
+import panel.MovieDetailPanel;
 import panel.MovieListPanel;
 import panel.MovieReservationPanel;
 import panel.RegisterPanel;
@@ -24,7 +25,8 @@ public class MovieReservationFrame extends JFrame {
 	private MovieReservationPanel adminloginpanel = new AdminLoginPanel();
 	private MovieReservationPanel registerPanel = new RegisterPanel();
 	private MovieReservationPanel movieListPanel = new MovieListPanel();
-
+	private MovieReservationPanel movieDetailPanel = new MovieDetailPanel();
+	
 	public MovieReservationPanel getCurrentPanel() {
 		return currentPanel;
 	}
@@ -43,7 +45,9 @@ public class MovieReservationFrame extends JFrame {
 	public MovieReservationPanel getRegisterPanel() {
 		return registerPanel;
 	}
-
+	public MovieReservationPanel getMovieDetailPanel() {
+		return movieDetailPanel;
+	}
 	public UserDTO getLoginSession() {
 		return loginSession;
 	}
@@ -57,8 +61,7 @@ public class MovieReservationFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50, 50);
 		setSize(WIDTH, HEIGHT);
-//		changePanel(loginchoicepanel);
-		changePanel(movieListPanel);
+		changePanel(loginchoicepanel);
 		setVisible(true);
 	}
 
