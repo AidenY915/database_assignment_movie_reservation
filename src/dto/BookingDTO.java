@@ -1,6 +1,8 @@
 package dto;
 
 import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
 
 public class BookingDTO {
 	private int bookingNo;
@@ -11,8 +13,12 @@ public class BookingDTO {
 	private int scheduleNo;
 	private String seatNo;
 	private String userId;
+	private String movieName;
+	private Date screeningDate;
+	private String hallName;
+	private Time screeningStartTime;
 
-	public BookingDTO(int bookingNo, String paymentMethod, String paymentStatus, int paymentAmount,
+		public BookingDTO(int bookingNo, String paymentMethod, String paymentStatus, int paymentAmount,
 			Timestamp paymentDate, int scheduleNo, String seatNo, String userId) {
 		super();
 		this.bookingNo = bookingNo;
@@ -23,6 +29,23 @@ public class BookingDTO {
 		this.scheduleNo = scheduleNo;
 		this.seatNo = seatNo;
 		this.userId = userId;
+			}
+
+	public BookingDTO(int bookingNo, String paymentMethod, String paymentStatus, int paymentAmount, Timestamp paymentDate,
+			int scheduleNo, String seatNo, String userId, String movieName, Date screeningDate, String hallName,
+			Time screeningStartTime) {
+		this.bookingNo = bookingNo;
+		this.paymentMethod = paymentMethod;
+		this.paymentStatus = paymentStatus;
+		this.paymentAmount = paymentAmount;
+		this.paymentDate = paymentDate;
+		this.scheduleNo = scheduleNo;
+		this.seatNo = seatNo;
+		this.userId = userId;
+		this.movieName = movieName;
+		this.screeningDate = screeningDate;
+		this.hallName = hallName;
+		this.screeningStartTime = screeningStartTime;
 	}
 
 	public int getBookingNo() {
@@ -89,4 +112,35 @@ public class BookingDTO {
 		this.userId = userId;
 	}
 
+	public String getMovieName() {
+		return movieName;
+	}
+
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+
+	public Date getScreeningDate() {
+		return screeningDate;
+	}
+
+	public void setScreeningDate(Date screeningDate) {
+		this.screeningDate = screeningDate;
+	}
+
+	public String getHallName() {
+		return hallName;
+	}
+
+	public void setHallName(String hallName) {
+		this.hallName = hallName;
+	}
+
+	public Time getScreeningStartTime() {
+		return screeningStartTime;
+	}
+
+	public void setScreeningStartTime(Time screeningStartTime) {
+		this.screeningStartTime = screeningStartTime;
+	}
 }

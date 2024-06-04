@@ -19,6 +19,7 @@ import panel.MovieDetailPanel;
 import panel.MovieListPanel;
 import panel.MovieReservationPanel;
 import panel.PaymentPanel;
+import panel.MyBookingListPanel;
 import panel.ReservationPanel;
 import panel.SeatSelectionPanel;
 import panel.TableSelectionPanel;
@@ -45,6 +46,7 @@ public class MovieReservationFrame extends JFrame {
 	private MovieReservationPanel reservationPanel = new ReservationPanel();
 	private MovieReservationPanel seatSelectionPanel = new SeatSelectionPanel();
 	private MovieReservationPanel paymentPanel = new PaymentPanel();
+	private MovieReservationPanel myBookingListPanel= new MyBookingListPanel();
     private Stack<MovieReservationPanel> panelStack = new Stack<>();
     private JButton backButton;
 
@@ -103,6 +105,10 @@ public class MovieReservationFrame extends JFrame {
     public MovieReservationPanel getReservationPanel() {
 		return reservationPanel;
 	}
+    public MovieReservationPanel getMyBookingListPanel() {
+    	return myBookingListPanel;
+    }
+    
 
 	public MovieReservationPanel getSeatSelectionPanel() {
 		return seatSelectionPanel;
