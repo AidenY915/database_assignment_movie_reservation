@@ -1,10 +1,6 @@
 package panel;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.Graphics;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -96,7 +92,7 @@ public class ReservationPanel extends MovieReservationPanel {
 	class SchedulePanel extends JPanel {
 		SchedulePanel() {
 			setBounds(100,300,800,300);
-			setLayout(new GridLayout(0,5));
+			setLayout(new FlowLayout());
 		}
 	}
 	
@@ -104,7 +100,7 @@ public class ReservationPanel extends MovieReservationPanel {
 		private ScreeningScheduleDTO scheduleDTO;
 		private ReservationPanel reservationPanel;
 		public ScheduleBtn(ScreeningScheduleDTO scheduleDTO, ReservationPanel reservationPanel) {
-			super(scheduleDTO.getScreeningDate().toString() + " " + scheduleDTO.getScreeningDay().toString());
+			super(scheduleDTO.getScreeningDate().toString() + " " + scheduleDTO.getScreeningStartTime().toString().substring(0, 5));
 			this.scheduleDTO = scheduleDTO;
 			this.reservationPanel = reservationPanel;
 			addActionListener(new SelectScheduleListener());
@@ -121,7 +117,7 @@ public class ReservationPanel extends MovieReservationPanel {
 	class SubmitBtn extends JButton {
 		ReservationPanel reservationPanel;
 		SubmitBtn(ReservationPanel reservationPanel) {
-			super("좌석 예약하기");
+			super("좌석 선택하기");
 			addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {

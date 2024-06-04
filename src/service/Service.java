@@ -1,10 +1,13 @@
 package service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import dao.DAO;
+import dto.BookingDTO;
 import dto.MovieDTO;
 import dto.ScreeningScheduleDTO;
+import dto.SeatDTO;
 import dto.UserDTO;
 import frame.MovieReservationFrame;
 
@@ -65,6 +68,22 @@ public class Service {
 	public List<ScreeningScheduleDTO> getScheduleListByMovieNo(MovieDTO movieDTO) {
 		int movieNo = movieDTO.getMovieNo();
 		return dao.selectSchedulesByMovieNo(movieNo);
+	}
+	public List<SeatDTO> getUnbookedSeatsBySchedule(ScreeningScheduleDTO scheduleDTO) {
+		return dao.selectUnbookedSeatsBySchedule(scheduleDTO.getHallNo(), scheduleDTO.getScheduleNo());
+	}
+	public List<SeatDTO> getAllSeatsByHallNo(int hallNo){
+		return dao.selectAllSeatsByHallNo(hallNo);
+	}
+	public int reserve(ScreeningScheduleDTO selectedSchedule, List<SeatDTO> selectedSeats) {
+		int rslt = 0;
+		for(SeatDTO seat : selectedSeats) {
+			rslt += dao.insertBooking(selectedSchedule, seat, frame.getLoginSession());
+		}
+		return rslt;
+	}
+	public List<BookingDTO> getUnpaidBookingList(ScreeningScheduleDTO selectedSchedule, List<SeatDTO> selectedSeats) {
+		return dao.selectUnpaidBookings(selectedSchedule, selectedSeats, frame.getLoginSession());
 	}
 }
 

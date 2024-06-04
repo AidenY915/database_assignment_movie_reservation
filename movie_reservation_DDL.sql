@@ -115,7 +115,7 @@ CREATE INDEX idx_seat_no ON seat(seat_no); -- booking의 외래키 설정 떄문
 
 CREATE TABLE `db1`.`booking` (
   `booking_no` INT NOT NULL AUTO_INCREMENT,
-  `payment_method` CHAR(20) NOT NULL,
+  `payment_method` CHAR(20),
   `payment_status` CHAR(20) NOT NULL DEFAULT 'pending',
   `payment_amount` INT NOT NULL,
   `payment_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -148,7 +148,7 @@ ENGINE = InnoDB;
 -- Table `db1`.`movie_ticket`
 -- -----------------------------------------------------
 CREATE TABLE `db1`.`movie_ticket` (
-  `ticket_no` INT NOT NULL,
+  `ticket_no` INT NOT NULL AUTO_INCREMENT,
   `booking_no` INT NOT NULL,
   PRIMARY KEY (`ticket_no`, `booking_no`),
   INDEX `fk_movie_ticket_booking_info1_idx` (`booking_no` ASC) VISIBLE,

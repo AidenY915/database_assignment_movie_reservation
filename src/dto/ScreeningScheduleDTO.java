@@ -5,7 +5,7 @@ import java.sql.Time;
 
 public class ScreeningScheduleDTO {
 	private int scheduleNo;
-	private int hall_no;
+	private int hallNo;
 	private Date screeningDate;
 	private String screeningDay;
 	private int screeningSession; // 상영 회차
@@ -13,11 +13,11 @@ public class ScreeningScheduleDTO {
 	private int movieNo;
 	private int standardPrice;
 
-	public ScreeningScheduleDTO(int scheduleNo, int hall_no, Date screeningDate, String screeningDay,
+	public ScreeningScheduleDTO(int scheduleNo, int hallNo, Date screeningDate, String screeningDay,
 			int screeningSession, Time screeningStartTime, int movieNo, int standardPrice) {
 		super();
 		this.scheduleNo = scheduleNo;
-		this.hall_no = hall_no;
+		this.hallNo = hallNo;
 		this.screeningDate = screeningDate;
 		this.screeningDay = screeningDay;
 		this.screeningSession = screeningSession;
@@ -34,12 +34,12 @@ public class ScreeningScheduleDTO {
 		this.scheduleNo = scheduleNo;
 	}
 
-	public int getHall_no() {
-		return hall_no;
+	public int getHallNo() {
+		return hallNo;
 	}
 
-	public void setHall_no(int hall_no) {
-		this.hall_no = hall_no;
+	public void setHallNo(int hallNo) {
+		this.hallNo = hallNo;
 	}
 
 	public Date getScreeningDate() {

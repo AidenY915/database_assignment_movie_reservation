@@ -7,13 +7,16 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import db_info.DbInfo;
 import db_info.SQLStatment;
+import dto.BookingDTO;
 import dto.MovieDTO;
 import dto.ScreeningScheduleDTO;
+import dto.SeatDTO;
 import dto.UserDTO;
 
 public class DAO implements DbInfo, SQLStatment {
@@ -21,7 +24,7 @@ public class DAO implements DbInfo, SQLStatment {
 	final static String DATABASE_URL = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 	private String DbId = USER_ID;
 	private String DbPw = USER_PW;
-	
+
 	private DAO() {
 	}
 
@@ -72,15 +75,13 @@ public class DAO implements DbInfo, SQLStatment {
 			actorNameCondition.append(" AND actor_name LIKE '%" + actorName + "%'");
 		}
 		String selectMoviesWithActorNameQuery = SELECT_MOVIES_WITH_ACTOR_NAME_QUERY
-				+ " WHERE movie_name LIKE ? AND director_name LIKE ?"
-				+ actorNameCondition.toString()
-				+ " AND genre LIKE ?"
-				+ " GROUP BY movie_no";
+				+ " WHERE movie_name LIKE ? AND director_name LIKE ?" + actorNameCondition.toString()
+				+ " AND genre LIKE ?" + " GROUP BY movie_no";
 		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement selectMoviesStmt = conn.prepareStatement(selectMoviesWithActorNameQuery);) {
-				selectMoviesStmt.setString(1, "%" + title + "%");
-				selectMoviesStmt.setString(2, "%" + director + "%");
-				selectMoviesStmt.setString(3, "%" + genre + "%");
+			selectMoviesStmt.setString(1, "%" + title + "%");
+			selectMoviesStmt.setString(2, "%" + director + "%");
+			selectMoviesStmt.setString(3, "%" + genre + "%");
 			try (ResultSet rs = selectMoviesStmt.executeQuery()) {
 				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
 					MovieDTO movieDTO = new MovieDTO(rs.getInt("movie_no"), rs.getString("movie_name"),
@@ -113,12 +114,12 @@ public class DAO implements DbInfo, SQLStatment {
 					rsltMovies.add(movieDTO);
 				}
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return rsltMovies;
 	}
-			
+
 	public UserDTO selectUserById(String id) {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		UserDTO rsltUserDTO = null;
@@ -251,7 +252,7 @@ public class DAO implements DbInfo, SQLStatment {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
-			
+
 			System.out.println(sql);
 			stmt.executeUpdate();
 			return true;
@@ -289,48 +290,126 @@ public class DAO implements DbInfo, SQLStatment {
 
 		return result.toString();
 	}
+
 	public boolean insertData(String tableName, String[] columns, String[] values) {
 		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
-        StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
-        for (String column : columns) {
-            query.append(column).append(", ");
-        }
-        query.setLength(query.length() - 2);
-        query.append(") VALUES (");
-        for (int i = 0; i < values.length; i++) {
-            query.append("?, ");
-        }
-        query.setLength(query.length() - 2);
-        query.append(")");
+		StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
+		for (String column : columns) {
+			query.append(column).append(", ");
+		}
+		query.setLength(query.length() - 2);
+		query.append(") VALUES (");
+		for (int i = 0; i < values.length; i++) {
+			query.append("?, ");
+		}
+		query.setLength(query.length() - 2);
+		query.append(")");
 
-        try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
-             PreparedStatement stmt = conn.prepareStatement(query.toString())) {
-            for (int i = 0; i < values.length; i++) {
-                stmt.setString(i + 1, values[i]);
-            }
-            stmt.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+				PreparedStatement stmt = conn.prepareStatement(query.toString())) {
+			for (int i = 0; i < values.length; i++) {
+				stmt.setString(i + 1, values[i]);
+			}
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public List<ScreeningScheduleDTO> selectSchedulesByMovieNo(int movieNo) {
 		List<ScreeningScheduleDTO> rsltSchedules = new LinkedList<>();
 		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
-				PreparedStatement selectSchedulesStmt = conn.prepareStatement(SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO);) {
-				selectSchedulesStmt.setInt(1, movieNo);
+				PreparedStatement selectSchedulesStmt = conn
+						.prepareStatement(SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO);) {
+			selectSchedulesStmt.setInt(1, movieNo);
 			try (ResultSet rs = selectSchedulesStmt.executeQuery()) {
 				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
-					ScreeningScheduleDTO ScreeningScheduleDTO = new ScreeningScheduleDTO(rs.getInt("schedule_no"), rs.getInt("hall_no"), rs.getDate("screening_date"), rs.getString("screening_date"), rs.getInt("screening_session"), rs.getTime("screening_start_time"), rs.getInt("movie_no"), rs.getInt("standard_price"));
+					ScreeningScheduleDTO ScreeningScheduleDTO = new ScreeningScheduleDTO(rs.getInt("schedule_no"),
+							rs.getInt("hall_no"), rs.getDate("screening_date"), rs.getString("screening_day"),
+							rs.getInt("screening_session"), rs.getTime("screening_start_time"), rs.getInt("movie_no"),
+							rs.getInt("standard_price"));
 					rsltSchedules.add(ScreeningScheduleDTO);
 				}
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return rsltSchedules;
 	}
 
+	public List<SeatDTO> selectUnbookedSeatsBySchedule(int hallNo, int scheduleNo) {
+		List<SeatDTO> unbookedSeats = new ArrayList<>(100);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement selectSeatsStmt = conn.prepareStatement(SELECT_UNBOOKED_SEATS_BY_SCHEDULE_NO);) {
+			selectSeatsStmt.setInt(1, hallNo);
+			selectSeatsStmt.setInt(2, scheduleNo);
+			try (ResultSet rs = selectSeatsStmt.executeQuery()) {
+				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+					SeatDTO seatDTO = new SeatDTO(hallNo, rs.getString("seat_no"));
+					unbookedSeats.add(seatDTO);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return unbookedSeats;
+	}
+
+	public List<SeatDTO> selectAllSeatsByHallNo(int hallNo) {
+		List<SeatDTO> seats = new ArrayList<>(100);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement selectSeatsStmt = conn.prepareStatement(SELECT_ALL_SEATS_BY_HALL_NO);) {
+			selectSeatsStmt.setInt(1, hallNo);
+			try (ResultSet rs = selectSeatsStmt.executeQuery()) {
+				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+					SeatDTO seatDTO = new SeatDTO(hallNo, rs.getString("seat_no"));
+					seats.add(seatDTO);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return seats;
+	}
+
+	public int insertBooking(ScreeningScheduleDTO schedule, SeatDTO seat, UserDTO user) {
+		int rslt = 0;
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement insertBookingStmt = conn.prepareStatement(INSERT_BOOKING);) {
+			insertBookingStmt.setInt(1, schedule.getStandardPrice());
+			insertBookingStmt.setInt(2, schedule.getScheduleNo());
+			insertBookingStmt.setString(3, seat.getSeatNo());
+			insertBookingStmt.setString(4, user.getId());
+			rslt = insertBookingStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rslt;
+	}
+
+	public List<BookingDTO> selectUnpaidBookings(ScreeningScheduleDTO schedule, List<SeatDTO> seats, UserDTO user) {
+		List<BookingDTO> bookings = new LinkedList<>();
+		for (SeatDTO seat : seats) {
+			try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+					PreparedStatement selectbookingsStmt = conn.prepareStatement(SELECT_UNPAID_BOOKING);) {
+				selectbookingsStmt.setInt(1, schedule.getScheduleNo());
+				selectbookingsStmt.setString(2, seat.getSeatNo());
+				selectbookingsStmt.setString(3, user.getId());
+				try (ResultSet rs = selectbookingsStmt.executeQuery()) {
+					while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+						BookingDTO bookingDTO = new BookingDTO(rs.getInt("booking_no"), rs.getString("payment_method"),
+								rs.getString("payment_status"), rs.getInt("payment_amount"),
+								rs.getTimestamp("payment_date"), rs.getInt("schedule_no"), rs.getString("seat_no"),
+								rs.getString("user_id"));
+						bookings.add(bookingDTO);
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return bookings;
+	}
 }

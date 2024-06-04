@@ -23,6 +23,12 @@ INSERT INTO screening_hall VALUES(NULL, 10000, "1관");
 INSERT INTO screening_hall VALUES(NULL, 10000, "2관");
 INSERT INTO screening_hall VALUES(NULL, 10000, "3관");
 
-INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(1, '2024-06-03', 'MON', 1, '13:00', 1);
-INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(3, '2024-06-05', 'WEN', 2, '12:00', 1);
-INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(2, '2024-06-04', 'TUE', 2, '15:00', 1);
+INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(1, '2024-06-03', 'MON', 1, '13:00:00', 1);
+INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(3, '2024-06-05', 'WEN', 2, '12:00:00', 1);
+INSERT INTO screening_schedule(hall_no, screening_date, screening_day, screening_session, screening_start_time, movie_no) VALUES(2, '2024-06-04', 'TUE', 3, '15:00:00', 1);
+
+INSERT INTO seat VALUES(1, 'A01');
+INSERT INTO seat VALUES(1, 'A02');
+INSERT INTO seat VALUES(1, 'A03');
+INSERT INTO seat VALUES(1, 'A04');
+INSERT INTO seat VALUES(1, 'A05');
