@@ -26,7 +26,7 @@ public class MovieListPanel extends MovieReservationPanel {
 	private Service service = Service.getService();
 	private List<MovieDTO> movieList;
 	private MovieListScrollPane currentMovieListScrollpane;
-
+	private JButton myListButton;
 	public MovieListPanel() {
 	}
 
@@ -47,7 +47,17 @@ public class MovieListPanel extends MovieReservationPanel {
 		JTextField directorNameField = new JTextField();
 		JTextField actorNameField = new JTextField();
 		JTextField genreField = new JTextField();
-
+		myListButton= new JButton("내 예매 내역 보기");
+		myListButton.setBounds(750, 10, 200, 30);
+		myListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+            	frame.changePanel(frame.getMyBookingListPanel());
+            }
+        });
+        add(myListButton);
+		
 		add(titleLabel);
 		add(movieName);
 		add(directorName);
@@ -111,6 +121,8 @@ public class MovieListPanel extends MovieReservationPanel {
 		revalidate();
 		repaint();
 	}
+	
+	
 }
 
 class MovieListScrollPane extends JScrollPane {
@@ -223,4 +235,7 @@ class SearchButton extends JButton {
 
 		});
 	}
+	
 }
+
+

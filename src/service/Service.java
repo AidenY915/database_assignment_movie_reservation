@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import dao.DAO;
+import dto.BookingDTO;
 import dto.MovieDTO;
 import dto.UserDTO;
 import frame.MovieReservationFrame;
@@ -60,6 +61,12 @@ public class Service {
 	}
 	public List<MovieDTO> getAllMovies() {
 		return dao.selectMovies("", "", "");
+	}
+	public List<BookingDTO> getBookingByUserId(String userId) {
+		return dao.getBookingByUserId(userId);
+	}
+	public boolean deleteBooking(int bookingNo) {
+		return dao.deleteBooking(bookingNo);
 	}
 }
 

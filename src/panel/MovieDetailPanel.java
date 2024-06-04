@@ -21,6 +21,9 @@ public class MovieDetailPanel extends MovieReservationPanel {
 	private JLabel releaseDateLabel = new JLabel();
 	private JLabel ratingLabel = new JLabel();
 
+	private JLabel actorLabel = new JLabel("배우");
+	private JLabel movieInfoLabel = new JLabel("영화 설명");
+
 	private JTextArea actorTextArea = new JTextArea();
 	private JTextArea movieInfoTextArea = new JTextArea();
 
@@ -46,25 +49,29 @@ public class MovieDetailPanel extends MovieReservationPanel {
 		add(releaseDateLabel);
 		add(movieInfoScrollPane);
 		add(ratingLabel);
-
+		add(actorLabel);
+		add(movieInfoLabel);
+		
+		
 		JButton moveToReservationBtn = new MoveToReservationBtn();
 		add(moveToReservationBtn);
-        moveToReservationBtn.setBounds(790,640,100,50);
+		moveToReservationBtn.setBounds(600, 500, 100, 50);
 
-		titleLabel.setBounds(50, 50, 400, 30);
+		titleLabel.setBounds(300, 50, 400, 30);
 		titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
 
-		directorLabel.setBounds(50, 100, 400, 30);
-		actorScrollPane.setBounds(50, 150, 400, 60);
-		genreLabel.setBounds(50, 230, 400, 30);
-		releaseDateLabel.setBounds(50, 280, 400, 30);
-		movieInfoScrollPane.setBounds(50, 330, 400, 100);
-		ratingLabel.setBounds(50, 450, 400, 30);
+		directorLabel.setBounds(300, 90, 400, 30);
+		actorLabel.setBounds(300, 130, 400, 20);
+		actorScrollPane.setBounds(300, 150, 400, 60);
+		genreLabel.setBounds(300, 220, 400, 30);
+		releaseDateLabel.setBounds(300, 260, 400, 30);
+		movieInfoLabel.setBounds(300, 300, 400, 20);
+		movieInfoScrollPane.setBounds(300, 320, 400, 150);
+		ratingLabel.setBounds(300, 480, 400, 30);
 
 		actorTextArea.setEditable(false);
 		movieInfoTextArea.setEditable(false);
 
-		moveToReservationBtn.setBounds(getWidth() - 10 - 100, getHeight() - 10 - 50, 100, 50);
 	}
 
 	private void updateMovieDetails() {
@@ -75,8 +82,10 @@ public class MovieDetailPanel extends MovieReservationPanel {
 		movieInfoTextArea.setText(movieDTO.getMovieInfo());
 		ratingLabel.setText("평점: " + movieDTO.getRatingInformation());
 
-		String actorNames = String.join(" ", movieDTO.getActorNames());
-        actorTextArea.setText(actorNames);
+		String actorNames = String.join(", ", movieDTO.getActorNames());
+		actorTextArea.setText(actorNames);
+		actorTextArea.setCaretPosition(0);
+		movieInfoTextArea.setCaretPosition(0);
 	}
 }
 

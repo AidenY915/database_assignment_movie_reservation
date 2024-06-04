@@ -84,7 +84,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE `db1`.`seat` (
   `hall_no` INT NOT NULL,
-  `seat_no` CHAR(3) NOT NULL,
+  `seat_no` CHAR(6) NOT NULL,
   PRIMARY KEY (`hall_no`, `seat_no`),
   CONSTRAINT `fk_seat_screening_hall1`
     FOREIGN KEY (`hall_no`)
@@ -115,7 +115,7 @@ CREATE INDEX idx_seat_no ON seat(seat_no); -- booking의 외래키 설정 떄문
 
 CREATE TABLE `db1`.`booking` (
   `booking_no` INT NOT NULL AUTO_INCREMENT,
-  `payment_method` CHAR(20) NOT NULL,
+  `payment_method` CHAR(20),
   `payment_status` CHAR(20) NOT NULL DEFAULT 'pending',
   `payment_amount` INT NOT NULL,
   `payment_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -148,7 +148,7 @@ ENGINE = InnoDB;
 -- Table `db1`.`movie_ticket`
 -- -----------------------------------------------------
 CREATE TABLE `db1`.`movie_ticket` (
-  `ticket_no` INT NOT NULL,
+  `ticket_no` INT NOT NULL AUTO_INCREMENT,
   `booking_no` INT NOT NULL,
   PRIMARY KEY (`ticket_no`, `booking_no`),
   INDEX `fk_movie_ticket_booking_info1_idx` (`booking_no` ASC) VISIBLE,
@@ -190,6 +190,39 @@ CREATE TABLE `db1`.`casting` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+DROP PROCEDURE IF EXISTS loopTicketInsert;
+DELIMITER $$
+CREATE PROCEDURE loopTicketInsert()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    WHILE i <= 120 DO
+	INSERT INTO movie_ticket(booking_no) VALUES (i);
+        SET i = i + 1;
+    END WHILE;
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS loopSeatInsert;
+DELIMITER $$
+CREATE PROCEDURE loopSeatInsert()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE j INT;
+    WHILE i <= 12 DO
+        SET j = 1;
+        WHILE j <= 10 DO
+            INSERT INTO SEAT VALUES (i, concat('A', j));
+            INSERT INTO SEAT VALUES (i, concat('B', j));
+            INSERT INTO SEAT VALUES (i, concat('C', j));
+            INSERT INTO SEAT VALUES (i, concat('D', j));
+            INSERT INTO SEAT  VALUES (i, concat('E', j));
+            SET j = j + 1;
+        END WHILE;
+        SET i = i + 1;
+    END WHILE;
+END$$
+DELIMITER ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
