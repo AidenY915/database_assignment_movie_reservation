@@ -84,6 +84,7 @@ public class Service {
 	}
 	public List<BookingDTO> getUnpaidBookingList(ScreeningScheduleDTO selectedSchedule, List<SeatDTO> selectedSeats) {
 		return dao.selectUnpaidBookings(selectedSchedule, selectedSeats, frame.getLoginSession());
+	}
 	public List<BookingDTO> getBookingByUserId(String userId) {
 		return dao.getBookingByUserId(userId);
 	}

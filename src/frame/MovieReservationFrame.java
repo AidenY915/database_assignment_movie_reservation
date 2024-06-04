@@ -18,8 +18,8 @@ import panel.LoginChoice;
 import panel.MovieDetailPanel;
 import panel.MovieListPanel;
 import panel.MovieReservationPanel;
-import panel.PaymentPanel;
 import panel.MyBookingListPanel;
+import panel.PaymentPanel;
 import panel.ReservationPanel;
 import panel.SeatSelectionPanel;
 import panel.TableSelectionPanel;
@@ -108,8 +108,6 @@ public class MovieReservationFrame extends JFrame {
     public MovieReservationPanel getMyBookingListPanel() {
     	return myBookingListPanel;
     }
-    
-
 	public MovieReservationPanel getSeatSelectionPanel() {
 		return seatSelectionPanel;
 	}

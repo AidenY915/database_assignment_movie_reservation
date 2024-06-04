@@ -31,7 +31,7 @@ public interface SQLStatment extends DbInfo {
 	
 	final static String INSERT_BOOKING = "INSERT INTO " + BOOKING_TABLE 
 			+ "(payment_method, payment_status, payment_amount, schedule_no, seat_no, user_id)"
-			+ " VALUES(NULL, 'wait', ?, ?, ?, ?)";
+			+ " VALUES(NULL, '미결제', ?, ?, ?, ?)";
 	
 	final static String SELECT_UNPAID_BOOKING = "SELECT * FROM " + BOOKING_TABLE
 			+ " WHERE payment_method is NULL AND schedule_no = ? AND seat_no = ? AND user_id = ?";

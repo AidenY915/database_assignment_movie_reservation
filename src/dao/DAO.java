@@ -77,8 +77,6 @@ public class DAO implements DbInfo, SQLStatment {
 		String selectMoviesWithActorNameQuery = SELECT_MOVIES_WITH_ACTOR_NAME_QUERY
 				+ " WHERE movie_name LIKE ? AND director_name LIKE ?" + actorNameCondition.toString()
 				+ " AND genre LIKE ?" + " GROUP BY movie_no";
-				+ " WHERE movie_name LIKE ? AND director_name LIKE ?" + actorNameCondition.toString()
-				+ " AND genre LIKE ?" + " GROUP BY movie_no";
 		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement selectMoviesStmt = conn.prepareStatement(selectMoviesWithActorNameQuery);) {
 			selectMoviesStmt.setString(1, "%" + title + "%");
@@ -119,7 +117,6 @@ public class DAO implements DbInfo, SQLStatment {
 					rsltMovies.add(movieDTO);
 				}
 			}
-		} catch (SQLException e) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -314,17 +311,6 @@ public class DAO implements DbInfo, SQLStatment {
 		}
 		query.setLength(query.length() - 2);
 		query.append(")");
-		StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
-		for (String column : columns) {
-			query.append(column).append(", ");
-		}
-		query.setLength(query.length() - 2);
-		query.append(") VALUES (");
-		for (int i = 0; i < values.length; i++) {
-			query.append("?, ");
-		}
-		query.setLength(query.length() - 2);
-		query.append(")");
 
 		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement(query.toString())) {
@@ -338,19 +324,6 @@ public class DAO implements DbInfo, SQLStatment {
 			return false;
 		}
 	}
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
-				PreparedStatement stmt = conn.prepareStatement(query.toString())) {
-			for (int i = 0; i < values.length; i++) {
-				stmt.setString(i + 1, values[i]);
-			}
-			stmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
 	public List<BookingDTO> getBookingByUserId(String userId) {
 		List<BookingDTO> bookingList = new LinkedList<>();
 		String query = "SELECT b.booking_no, b.payment_method, b.payment_status, b.payment_amount, b.payment_date, "
@@ -366,7 +339,7 @@ public class DAO implements DbInfo, SQLStatment {
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					BookingDTO booking = new BookingDTO(rs.getInt("booking_no"), rs.getString("payment_method"),
-							rs.getString("payment_status"), rs.getInt("payment_amount"), rs.getDate("payment_date"),
+							rs.getString("payment_status"), rs.getInt("payment_amount"), rs.getTimestamp("payment_date"),
 							rs.getInt("schedule_no"), rs.getString("seat_no"), rs.getString("user_id"),
 							rs.getString("movie_name"), rs.getDate("screening_date"), rs.getString("hall_name"),
 							rs.getTime("screening_start_time"));
