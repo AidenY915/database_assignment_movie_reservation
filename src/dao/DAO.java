@@ -86,14 +86,13 @@ public class DAO implements DbInfo, SQLStatment {
 			selectMoviesStmt.setString(2, "%" + director + "%");
 			selectMoviesStmt.setString(3, "%" + genre + "%");
 			try (ResultSet rs = selectMoviesStmt.executeQuery()) {
-				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+				while (rs.next()) {
 					MovieDTO movieDTO = new MovieDTO(rs.getInt("movie_no"), rs.getString("movie_name"),
 							rs.getInt("running_time"), rs.getInt("age_rating"), rs.getString("director_name"),
 							rs.getString("genre"), rs.getDate("release_date"), rs.getString("movie_info"),
 							rs.getFloat("rating_information"), rs.getString("actor_names"));
 					rsltMovies.add(movieDTO);
 				}
-				// 마지막에 배우 이름 다 안들어 간 거 삭제
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,7 +108,7 @@ public class DAO implements DbInfo, SQLStatment {
 			selectMoviesStmt.setString(2, "%" + director + "%");
 			selectMoviesStmt.setString(3, "%" + genre + "%");
 			try (ResultSet rs = selectMoviesStmt.executeQuery()) {
-				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+				while (rs.next()) {
 					MovieDTO movieDTO = new MovieDTO(rs.getInt("movie_no"), rs.getString("movie_name"),
 							rs.getInt("running_time"), rs.getInt("age_rating"), rs.getString("director_name"),
 							rs.getString("genre"), rs.getDate("release_date"), rs.getString("movie_info"),
@@ -123,11 +122,9 @@ public class DAO implements DbInfo, SQLStatment {
 		return rsltMovies;
 	}
 
-
 	public UserDTO selectUserById(String id) {
-		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		UserDTO rsltUserDTO = null;
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement selectUserByIdStmt = conn.prepareStatement(selectUserById);) {
 			selectUserByIdStmt.setString(1, id);
 			try (ResultSet rs = selectUserByIdStmt.executeQuery()) {
@@ -144,8 +141,7 @@ public class DAO implements DbInfo, SQLStatment {
 	}
 
 	public boolean insertUser(UserDTO user) {
-		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement insertUserStmt = conn.prepareStatement(insertUser);) {
 			insertUserStmt.setString(1, user.getId());
 			insertUserStmt.setString(2, user.getUserName());
@@ -162,8 +158,6 @@ public class DAO implements DbInfo, SQLStatment {
 	}
 
 	public boolean initializeDatabase() {
-		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
-
 		String[] sqlStatements = { "SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;",
 				"SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;",
 				"SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';",
@@ -217,8 +211,8 @@ public class DAO implements DbInfo, SQLStatment {
 						+ "CONSTRAINT `fk_booking_info_user1`" + "FOREIGN KEY (`user_id`)"
 						+ "REFERENCES `db1`.`user` (`user_id`)" + " ON DELETE NO ACTION" + " ON UPDATE NO ACTION)"
 						+ "ENGINE = InnoDB;",
-				"CREATE TABLE `db1`.`movie_ticket` (" + "`ticket_no` INT NOT NULL AUTO_INCREMENT," + "`booking_no` INT NOT NULL,"
-						+ "PRIMARY KEY (`ticket_no`, `booking_no`),"
+				"CREATE TABLE `db1`.`movie_ticket` (" + "`ticket_no` INT NOT NULL AUTO_INCREMENT,"
+						+ "`booking_no` INT NOT NULL," + "PRIMARY KEY (`ticket_no`, `booking_no`),"
 						+ "INDEX `fk_movie_ticket_booking_info1_idx` (`booking_no` ASC) VISIBLE,"
 						+ "CONSTRAINT `fk_movie_ticket_booking_info1`" + "FOREIGN KEY (`booking_no`)"
 						+ "REFERENCES `db1`.`booking` (`booking_no`)" + " ON DELETE NO ACTION" + " ON UPDATE NO ACTION)"
@@ -237,28 +231,21 @@ public class DAO implements DbInfo, SQLStatment {
 				"SET SQL_MODE=@OLD_SQL_MODE;", "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;",
 				"SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;" };
 
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				Statement stmt = conn.createStatement()) {
-
 			for (String sql : sqlStatements) {
 				stmt.executeUpdate(sql);
 			}
-
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
 	public boolean executeSQL(String sql) {
-		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
-
-
-			System.out.println(sql);
 			stmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -268,10 +255,8 @@ public class DAO implements DbInfo, SQLStatment {
 	}
 
 	public String viewTableData(String tableName) {
-		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		StringBuilder result = new StringBuilder();
-
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + tableName);
 				ResultSet rs = stmt.executeQuery()) {
 
@@ -289,17 +274,13 @@ public class DAO implements DbInfo, SQLStatment {
 				}
 				result.append("\n");
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return result.toString();
 	}
 
-
 	public boolean insertData(String tableName, String[] columns, String[] values) {
-		String databaseUrl = "jdbc:mysql://localhost:3306/" + DATABASE + "?serverTimezone=Asia/Seoul";
 		StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
 		for (String column : columns) {
 			query.append(column).append(", ");
@@ -312,7 +293,7 @@ public class DAO implements DbInfo, SQLStatment {
 		query.setLength(query.length() - 2);
 		query.append(")");
 
-		try (Connection conn = DriverManager.getConnection(databaseUrl, DbId, DbPw);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
 				PreparedStatement stmt = conn.prepareStatement(query.toString())) {
 			for (int i = 0; i < values.length; i++) {
 				stmt.setString(i + 1, values[i]);
@@ -324,6 +305,7 @@ public class DAO implements DbInfo, SQLStatment {
 			return false;
 		}
 	}
+
 	public List<BookingDTO> getBookingByUserId(String userId) {
 		List<BookingDTO> bookingList = new LinkedList<>();
 		String query = "SELECT b.booking_no, b.payment_method, b.payment_status, b.payment_amount, b.payment_date, "
@@ -339,10 +321,10 @@ public class DAO implements DbInfo, SQLStatment {
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					BookingDTO booking = new BookingDTO(rs.getInt("booking_no"), rs.getString("payment_method"),
-							rs.getString("payment_status"), rs.getInt("payment_amount"), rs.getTimestamp("payment_date"),
-							rs.getInt("schedule_no"), rs.getString("seat_no"), rs.getString("user_id"),
-							rs.getString("movie_name"), rs.getDate("screening_date"), rs.getString("hall_name"),
-							rs.getTime("screening_start_time"));
+							rs.getString("payment_status"), rs.getInt("payment_amount"),
+							rs.getTimestamp("payment_date"), rs.getInt("schedule_no"), rs.getString("seat_no"),
+							rs.getString("user_id"), rs.getString("movie_name"), rs.getDate("screening_date"),
+							rs.getString("hall_name"), rs.getTime("screening_start_time"));
 					bookingList.add(booking);
 				}
 			}
@@ -355,27 +337,25 @@ public class DAO implements DbInfo, SQLStatment {
 	public boolean deleteBooking(int bookingNo) {
 		String deleteMovieTicketSql = "DELETE FROM movie_ticket WHERE booking_no = ?";
 		String deleteBookingSql = "DELETE FROM booking WHERE booking_no = ?";
-		 try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
-		         PreparedStatement deleteMovieTicketStmt = conn.prepareStatement(deleteMovieTicketSql);
-		         PreparedStatement deleteBookingStmt = conn.prepareStatement(deleteBookingSql)) {
-			 
-		        conn.setAutoCommit(false);
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement deleteMovieTicketStmt = conn.prepareStatement(deleteMovieTicketSql);
+				PreparedStatement deleteBookingStmt = conn.prepareStatement(deleteBookingSql)) {
 
-		        deleteMovieTicketStmt.setInt(1, bookingNo);
-		        deleteMovieTicketStmt.executeUpdate();
+			conn.setAutoCommit(false);
 
-		        
-		        deleteBookingStmt.setInt(1, bookingNo);
-		        int rowsAffected = deleteBookingStmt.executeUpdate();
+			deleteMovieTicketStmt.setInt(1, bookingNo);
+			deleteMovieTicketStmt.executeUpdate();
 
-		        conn.commit();
+			deleteBookingStmt.setInt(1, bookingNo);
+			int rowsAffected = deleteBookingStmt.executeUpdate();
 
-		        return rowsAffected > 0;	//하나 이상의 행이 삭제되면 true 반화
+			conn.commit();
+
+			return rowsAffected > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
 	public List<ScreeningScheduleDTO> selectSchedulesByMovieNo(int movieNo) {
@@ -385,7 +365,7 @@ public class DAO implements DbInfo, SQLStatment {
 						.prepareStatement(SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO);) {
 			selectSchedulesStmt.setInt(1, movieNo);
 			try (ResultSet rs = selectSchedulesStmt.executeQuery()) {
-				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+				while (rs.next()) {
 					ScreeningScheduleDTO ScreeningScheduleDTO = new ScreeningScheduleDTO(rs.getInt("schedule_no"),
 							rs.getInt("hall_no"), rs.getDate("screening_date"), rs.getString("screening_day"),
 							rs.getInt("screening_session"), rs.getTime("screening_start_time"), rs.getInt("movie_no"),
@@ -406,7 +386,7 @@ public class DAO implements DbInfo, SQLStatment {
 			selectSeatsStmt.setInt(1, hallNo);
 			selectSeatsStmt.setInt(2, scheduleNo);
 			try (ResultSet rs = selectSeatsStmt.executeQuery()) {
-				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+				while (rs.next()) {
 					SeatDTO seatDTO = new SeatDTO(hallNo, rs.getString("seat_no"));
 					unbookedSeats.add(seatDTO);
 				}
@@ -423,7 +403,7 @@ public class DAO implements DbInfo, SQLStatment {
 				PreparedStatement selectSeatsStmt = conn.prepareStatement(SELECT_ALL_SEATS_BY_HALL_NO);) {
 			selectSeatsStmt.setInt(1, hallNo);
 			try (ResultSet rs = selectSeatsStmt.executeQuery()) {
-				while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+				while (rs.next()) {
 					SeatDTO seatDTO = new SeatDTO(hallNo, rs.getString("seat_no"));
 					seats.add(seatDTO);
 				}
@@ -458,7 +438,7 @@ public class DAO implements DbInfo, SQLStatment {
 				selectbookingsStmt.setString(2, seat.getSeatNo());
 				selectbookingsStmt.setString(3, user.getId());
 				try (ResultSet rs = selectbookingsStmt.executeQuery()) {
-					while (rs.next()) { // 만약 앞에 나온 것 중에 movie_no이 같은게 있다면 actor에 추가, 최초 인 경우 그냥 이름 넣기
+					while (rs.next()) {
 						BookingDTO bookingDTO = new BookingDTO(rs.getInt("booking_no"), rs.getString("payment_method"),
 								rs.getString("payment_status"), rs.getInt("payment_amount"),
 								rs.getTimestamp("payment_date"), rs.getInt("schedule_no"), rs.getString("seat_no"),
@@ -494,4 +474,70 @@ public class DAO implements DbInfo, SQLStatment {
 		}
 		return;
 	}
+
+	public boolean updateBookingSchedule(int bookingNo, int newScheduleNo) {
+		String sql = "UPDATE booking SET schedule_no = ? WHERE booking_no = ?";
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, newScheduleNo);
+			stmt.setInt(2, bookingNo);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public int getMovieNoByScheduleNo(int scheduleNo) {
+		String sql = "SELECT movie_no FROM screening_schedule WHERE schedule_no = ?";
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, scheduleNo);
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("movie_no");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public MovieDTO getMovieByNo(int movieNo) {
+		String sql = "SELECT * FROM movie WHERE movie_no = ?";
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, movieNo);
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return new MovieDTO(rs.getInt("movie_no"), rs.getString("movie_name"), rs.getInt("running_time"),
+							rs.getInt("age_rating"), rs.getString("director_name"), rs.getString("Genre"),
+							rs.getDate("release_date"), rs.getString("movie_info"), rs.getFloat("rating_information"),
+							(List<String>) null);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean updatePaymentInfo(BookingDTO booking) {
+		String sql = "UPDATE booking SET payment_method = ?, payment_status = '결제완료', payment_amount = ? WHERE booking_no = ?";
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, booking.getPaymentMethod());
+			stmt.setInt(2, booking.getPaymentAmount());
+			stmt.setInt(3, booking.getBookingNo());
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+
 }

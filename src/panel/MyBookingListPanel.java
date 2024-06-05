@@ -135,20 +135,26 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			add(paymentStatusLabel);
 			add(paymentAmountLabel);
 
-			JButton editButton=new JButton("수정");
-			editButton.setBounds(760,50,80,30);
+			JButton editButton = new JButton("수정");
+			editButton.setBounds(760, 50, 80, 30);
 			add(editButton);
-			
+
 			editButton.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					editBooking();
+					String[] options = { "영화 변경", "상영 일정 변경", "취소" };
+					int choice = JOptionPane.showOptionDialog(BookingPanel.this, "원하는 작업을 선택하세요.", "예매 수정",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+					if (choice == 0) {
+						editMovie();
+					} else if (choice == 1) {
+						editSchedule();
+					}
+
 				}
 			});
-			
-			
-			
+
 			JButton deleteButton = new JButton("삭제");
 			deleteButton.setBounds(850, 50, 80, 30);
 			add(deleteButton);
@@ -192,15 +198,28 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			
 		}
 
-		private void editBooking() {
-//			수정 로직 
+		private void editSchedule() {
+		    MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+		    ReservationPanel reservationPanel = (ReservationPanel) frame.getReservationPanel();
+		    reservationPanel.setEditMode(booking, true); // 상영 일정 변경
+			System.out.println(booking);
+		    frame.changePanel(reservationPanel);
 		}
-		
+
+		private void editMovie() {
+		    MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+		    MovieListPanel movieListPanel = (MovieListPanel) frame.getMovieListPanel();
+		    movieListPanel.setEditMode(booking); // 영화 변경
+		    System.out.println(booking);
+		    frame.changePanel(movieListPanel);
+		}
+
+
 		private void deleteBooking() {
 			String[] options = { "삭제", "취소" };
 			int deleteCheck = JOptionPane.showOptionDialog(this, "정말 이 예매를 취소하시겠습니까?", "예매 취소",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);		//DEFAULT_OPTION은 사용자가 직접 만든것만 사용하게함
-			if (deleteCheck == 0) { 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			if (deleteCheck == 0) {
 				boolean success = service.deleteBooking(booking.getBookingNo());
 				if (success) {
 					JOptionPane.showMessageDialog(this, "예매가 성공적으로 삭제되었습니다.");
@@ -215,6 +234,5 @@ public class MyBookingListPanel extends MovieReservationPanel {
 				}
 			}
 		}
-
 	}
 }

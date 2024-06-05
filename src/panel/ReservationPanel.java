@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import dto.BookingDTO;
 import dto.MovieDTO;
 import dto.ScreeningScheduleDTO;
 import frame.MovieReservationFrame;
@@ -23,14 +23,15 @@ public class ReservationPanel extends MovieReservationPanel {
 	private MovieDTO selectedMovie;
 	private SchedulePanel schedulePanel = new SchedulePanel();
 	private ScreeningScheduleDTO selectedSchedule;
+	private boolean isEditMode = false;
+	private BookingDTO bookingToEdit;
 
 	@Override
 	public void init() {
 		removeAll();
-
 		setLayout(null);
 
-		comboBox = new JComboBox<MovieDTO>();
+		comboBox = new JComboBox<>();
 		movieList = service.getAllMovies();
 		for (MovieDTO movie : movieList) {
 			comboBox.addItem(movie);
@@ -48,11 +49,15 @@ public class ReservationPanel extends MovieReservationPanel {
 		comboBox.addActionListener(new SelectMovieListener(this));
 		submitBtn.setBounds(350, 700, 300, 50);
 
-		selectedMovie = (MovieDTO) comboBox.getSelectedItem();
+		if (!isEditMode) {
+			selectedMovie = (MovieDTO) comboBox.getSelectedItem();
+		}
 		addSchedule();
 	}
 
-	private void addSchedule() {
+	void addSchedule() {
+		if (comboBox == null)
+			return; // ComboBox가 초기화되지 않은 경우
 		schedulePanel.removeAll();
 		selectedMovie = (MovieDTO) comboBox.getSelectedItem();
 		List<ScreeningScheduleDTO> scheduleList = service.getScheduleListByMovieNo(selectedMovie);
@@ -71,7 +76,6 @@ public class ReservationPanel extends MovieReservationPanel {
 		}
 		schedulePanel.revalidate();
 		schedulePanel.repaint();
-
 	}
 
 	void moveToSeatSelection() {
@@ -98,6 +102,20 @@ public class ReservationPanel extends MovieReservationPanel {
 		}
 	}
 
+	public void setEditMode(BookingDTO booking, boolean isScheduleEdit) {
+		this.isEditMode = true;
+		this.bookingToEdit = booking;
+		if (isScheduleEdit) {
+			int movieNo = service.getMovieNoByScheduleNo(booking.getScheduleNo());
+			selectedMovie = service.getMovieByNo(movieNo);
+			comboBox.setSelectedItem(selectedMovie);
+			addSchedule();
+			System.out.println(bookingToEdit.getBookingNo());
+		} else {
+
+		}
+	}
+
 	class SchedulePanel extends JPanel {
 		SchedulePanel() {
 			setBounds(100, 300, 800, 300);
@@ -121,7 +139,17 @@ public class ReservationPanel extends MovieReservationPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				reservationPanel.selectedSchedule = scheduleDTO;
-				System.out.println(reservationPanel.selectedSchedule.getScheduleNo());
+				if (reservationPanel.isEditMode) {
+					boolean success = service.updateBookingSchedule(reservationPanel.bookingToEdit.getBookingNo(),
+							scheduleDTO.getScheduleNo());
+					if (success) {
+						reservationPanel.moveToSeatSelection();
+					} else {
+						JOptionPane.showMessageDialog(reservationPanel, "상영 일정 변경에 실패했습니다.");
+					}
+				} else {
+					reservationPanel.moveToSeatSelection();
+				}
 			}
 		}
 	}
@@ -139,5 +167,4 @@ public class ReservationPanel extends MovieReservationPanel {
 			});
 		}
 	}
-
 }
