@@ -39,7 +39,6 @@ public class MovieListPanel extends MovieReservationPanel {
         removeAll();
 
         setLayout(null);
-        isEditMode = false;
         JLabel titleLabel = new JLabel("영화 목록");
 
         JLabel movieName = new JLabel("영화 제목");
