@@ -155,7 +155,7 @@ CREATE TABLE `db1`.`movie_ticket` (
   CONSTRAINT `fk_movie_ticket_booking_info1`
     FOREIGN KEY (`booking_no`)
     REFERENCES `db1`.`booking` (`booking_no`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

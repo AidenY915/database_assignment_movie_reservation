@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -16,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.JOptionPane;
 
 import dto.BookingDTO;
 import dto.MovieDTO;
@@ -52,12 +49,9 @@ public class MovieListPanel extends MovieReservationPanel {
         JTextField genreField = new JTextField();
         myListButton = new JButton("내 예매 내역 보기");
         myListButton.setBounds(750, 10, 200, 30);
-        myListButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-                frame.changePanel(frame.getMyBookingListPanel());
-            }
+        myListButton.addActionListener(e -> {
+            MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+            frame.changePanel(frame.getMyBookingListPanel());
         });
         add(myListButton);
 
@@ -87,13 +81,11 @@ public class MovieListPanel extends MovieReservationPanel {
         genre.setBounds(750, 70, 80, 50);
         genreField.setBounds(810, 75, 140, 40);
 
-        SearchButton searchButton = new SearchButton(this, movieNameField, directorNameField, actorNameField,
-                genreField);
+        SearchButton searchButton = new SearchButton(this, movieNameField, directorNameField, actorNameField, genreField);
         add(searchButton);
         searchButton.setBounds(440, 150, 100, 50);
 
-        searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(),
-                genreField.getText());
+        searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(), genreField.getText());
     }
 
     private List<MovieDTO> getMovieList(String title, String director, String actor, String genre) {
@@ -206,10 +198,11 @@ public class MovieListPanel extends MovieReservationPanel {
             public void mouseClicked(MouseEvent e) {
                 MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
                 if (isEditMode) {
-                    ReservationPanel reservationPanel = (ReservationPanel) frame.getReservationPanel();
-                    reservationPanel.setEditMode(bookingToEdit, false);  // 영화 변경
-                    frame.changePanel(reservationPanel);
-        			System.out.println(bookingToEdit.getBookingNo());
+                    MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
+                    movieDetailPanel.setBookingToEdit(bookingToEdit); // booking 정보 전달
+                    System.out.println(bookingToEdit);
+                    movieDetailPanel.setMovieDTO(movieDTO);
+                    frame.changePanel(movieDetailPanel);
                 } else {
                     MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
                     movieDetailPanel.setMovieDTO(movieDTO);
@@ -235,13 +228,9 @@ public class MovieListPanel extends MovieReservationPanel {
             this.actorNameField = actorNameField;
             this.genreField = genreField;
 
-            this.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    movieListPanel.searchMovieList(movieNameField.getText(), directorNameField.getText(),
-                            actorNameField.getText(), genreField.getText());
-                }
-            });
+            this.addActionListener(e -> movieListPanel.searchMovieList(
+                movieNameField.getText(), directorNameField.getText(), actorNameField.getText(), genreField.getText()
+            ));
         }
     }
 }

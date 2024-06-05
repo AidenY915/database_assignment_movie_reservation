@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -31,8 +32,8 @@ public class SeatSelectionPanel extends MovieReservationPanel {
     public void init() {
         removeAll();
         setSeatList();
+        System.out.println(bookingToEdit);
         selectedSeats = new LinkedList<SeatDTO>();
-
         setLayout(null);
 
         JButton submitBtn = new SubmitBtn(this);
@@ -84,19 +85,25 @@ public class SeatSelectionPanel extends MovieReservationPanel {
     }
 
     public void submit() {
+        boolean success = false;
         if (bookingToEdit != null) {
-            if (service.createNewBooking(selectedSchedule, selectedSeats, bookingToEdit)) {
-            	System.out.println(bookingToEdit.getBookingNo());
-                service.deleteOldBooking(bookingToEdit);
+            success = service.createNewBooking(selectedSchedule, selectedSeats, bookingToEdit);
+            if (success) {
+                service.deleteBooking(bookingToEdit.getBookingNo());
             }
         } else {
-            service.reserve(selectedSchedule, selectedSeats);
+            success = service.reserve(selectedSchedule, selectedSeats) == selectedSeats.size();
         }
-        MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-        List<BookingDTO> bookings = service.getUnpaidBookingList(selectedSchedule, selectedSeats);
-        PaymentPanel paymentPanel = (PaymentPanel) frame.getPaymentPanel();
-        paymentPanel.setBookings(bookings);
-        frame.changePanel(paymentPanel);
+
+        if (success) {
+            MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+            List<BookingDTO> bookings = service.getUnpaidBookingList(selectedSchedule, selectedSeats);
+            PaymentPanel paymentPanel = (PaymentPanel) frame.getPaymentPanel();
+            paymentPanel.setBookings(bookings);
+            frame.changePanel(paymentPanel);
+        } else {
+            JOptionPane.showMessageDialog(this, "좌석 예약에 실패했습니다.");
+        }
     }
 
     class SubmitBtn extends JButton {
