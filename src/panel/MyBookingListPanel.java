@@ -174,7 +174,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					service.issueTicket(booking);
+					issueTicket();
 				}
 			});
 			
@@ -233,6 +233,12 @@ public class MyBookingListPanel extends MovieReservationPanel {
 					JOptionPane.showMessageDialog(this, "예매 삭제에 실패했습니다.");
 				}
 			}
+		}
+		private void issueTicket() {
+			service.issueTicket(booking);
+			String[] options = {"확인"};
+			JOptionPane.showOptionDialog(this, "티켓이 발급되었습니다.", "티켓 발급",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		}
 	}
 }
