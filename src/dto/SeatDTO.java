@@ -44,9 +44,12 @@ public class SeatDTO implements Comparable<SeatDTO>{
 
 	@Override
 	public int compareTo(SeatDTO o) {
-		int hallDiff = this.hallNo - o.hallNo;
-		if (hallDiff != 0) return hallDiff;
-		return this.seatNo.compareTo(o.seatNo);
+		int rslt = this.hallNo - o.hallNo;
+		if (rslt == 0)
+			rslt = this.seatNo.charAt(0) - o.seatNo.charAt(0);
+		if (rslt == 0)
+			rslt = Integer.valueOf(this.seatNo.substring(1))-Integer.valueOf(o.seatNo.substring(1));;
+		return rslt;
 	}
 	@Override
 	public String toString() {

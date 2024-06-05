@@ -82,10 +82,12 @@ public class SeatSelectionPanel extends MovieReservationPanel {
 	}
 
 	public void submit() {
-		System.out.println(service.reserve(selectedSchedule ,selectedSeats));
+		service.reserve(selectedSchedule ,selectedSeats);
 		MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
 		List<BookingDTO> bookings = service.getUnpaidBookingList(selectedSchedule ,selectedSeats);
-		System.out.println(bookings);
+		for(BookingDTO booking : bookings) {
+			service.deleteTicket(booking);
+		}
 		PaymentPanel paymentPanel = (PaymentPanel)frame.getPaymentPanel();
 		paymentPanel.setBookings(bookings);
 		frame.changePanel(paymentPanel);

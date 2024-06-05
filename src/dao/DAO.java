@@ -472,4 +472,26 @@ public class DAO implements DbInfo, SQLStatment {
 		}
 		return bookings;
 	}
+	
+	public void insertTicket(BookingDTO booking) {
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement insertTicketStmt = conn.prepareStatement(INSERT_TICKET);) {
+			insertTicketStmt.setInt(1, booking.getBookingNo());
+			insertTicketStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return;
+	}
+	
+	public void deleteTicket(BookingDTO booking) {
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement deleteTicketStmt = conn.prepareStatement(DELETE_TICKET);) {
+			deleteTicketStmt.setInt(1, booking.getBookingNo());
+			deleteTicketStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return;
+	}
 }

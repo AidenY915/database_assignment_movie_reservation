@@ -5,15 +5,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingUtilities;
+
 import dto.BookingDTO;
 import dto.UserDTO;
 import frame.MovieReservationFrame;
@@ -157,6 +159,37 @@ public class MyBookingListPanel extends MovieReservationPanel {
 					deleteBooking();
 				}
 			});
+			
+			JButton issueTicketButton = new JButton("티켓 발급");
+			issueTicketButton.setBounds(640, 50, 110, 30);
+			add(issueTicketButton);
+			
+			issueTicketButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					service.issueTicket(booking);
+				}
+			});
+			
+			if(booking.getPaymentStatus().equals("미결제")) {
+				JButton paymentButton = new JButton("결제하기");
+				paymentButton.setBounds(520, 50, 110, 30);
+				add(paymentButton);
+				paymentButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+						PaymentPanel paymentPanel = (PaymentPanel)frame.getPaymentPanel();
+						List<BookingDTO> bookingList = new LinkedList<>();
+						bookingList.add(booking);
+						paymentPanel.setBookings(bookingList);
+						frame.changePanel(paymentPanel);
+					}
+				});
+			}
+			
 		}
 
 		private void editBooking() {

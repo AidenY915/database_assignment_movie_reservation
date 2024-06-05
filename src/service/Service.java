@@ -91,6 +91,13 @@ public class Service {
 	public boolean deleteBooking(int bookingNo) {
 		return dao.deleteBooking(bookingNo);
 	}
+	public void deleteTicket(BookingDTO booking) {
+		dao.deleteTicket(booking);
+	}
+	public void issueTicket(BookingDTO booking) {
+		dao.deleteTicket(booking);
+		dao.insertTicket(booking);
+	}
 }
 
 

@@ -35,4 +35,8 @@ public interface SQLStatment extends DbInfo {
 	
 	final static String SELECT_UNPAID_BOOKING = "SELECT * FROM " + BOOKING_TABLE
 			+ " WHERE payment_method is NULL AND schedule_no = ? AND seat_no = ? AND user_id = ?";
+	
+	final static String DELETE_TICKET = "DELETE FROM " + TICKET_TABLE + " WHERE booking_no = ?";
+	
+	final static String INSERT_TICKET = "INSERT INTO " + TICKET_TABLE + "(booking_no) VALUES(?)";
 }

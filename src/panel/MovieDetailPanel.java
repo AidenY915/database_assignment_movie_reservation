@@ -51,9 +51,8 @@ public class MovieDetailPanel extends MovieReservationPanel {
 		add(ratingLabel);
 		add(actorLabel);
 		add(movieInfoLabel);
-		
-		
-		JButton moveToReservationBtn = new MoveToReservationBtn();
+
+		JButton moveToReservationBtn = new MoveToReservationBtn(movieDTO);
 		add(moveToReservationBtn);
 		moveToReservationBtn.setBounds(600, 500, 100, 50);
 
@@ -71,7 +70,6 @@ public class MovieDetailPanel extends MovieReservationPanel {
 
 		actorTextArea.setEditable(false);
 		movieInfoTextArea.setEditable(false);
-
 	}
 
 	private void updateMovieDetails() {
@@ -90,9 +88,11 @@ public class MovieDetailPanel extends MovieReservationPanel {
 }
 
 class MoveToReservationBtn extends JButton {
+	private MovieDTO movieDTO;
 
-	public MoveToReservationBtn() {
+	public MoveToReservationBtn(MovieDTO movieDTO) {
 		super("예매하기");
+		this.movieDTO = movieDTO;
 		addActionListener(new MoveToReservationActionListener());
 	}
 
@@ -101,6 +101,7 @@ class MoveToReservationBtn extends JButton {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+			((ReservationPanel) frame.getReservationPanel()).setSelectedMovie(movieDTO);
 			frame.changePanel(frame.getReservationPanel());
 		}
 	}

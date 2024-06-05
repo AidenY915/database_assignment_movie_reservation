@@ -135,5 +135,10 @@ public class MovieDTO {
 	public String toString() {
 		return movieName;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.movieNo == ((MovieDTO)obj).movieNo;
+	}
 
 }

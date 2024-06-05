@@ -2,6 +2,7 @@ package frame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -49,7 +50,8 @@ public class MovieReservationFrame extends JFrame {
 	private MovieReservationPanel myBookingListPanel= new MyBookingListPanel();
     private Stack<MovieReservationPanel> panelStack = new Stack<>();
     private JButton backButton;
-
+    public static final Date TODAY = new Date(2024-1900, 5, 7); // 2024년 6월 7일;
+    
     public MovieReservationPanel getCurrentPanel() {
         return currentPanel;
     }
@@ -144,6 +146,8 @@ public class MovieReservationFrame extends JFrame {
 
         changePanel(loginChoicePanel);
         setVisible(true);
+        
+        System.out.println("Today : " + TODAY.toString());
     }
 
 	// 싱글톤 패턴 생성자 대신 호출
