@@ -132,7 +132,6 @@ public class MovieListPanel extends MovieReservationPanel {
             setSize(WIDTH, HEIGHT);
             setLayout(new ScrollPaneLayout());
             setLocation(4, Y);
-            setBackground(Color.BLUE);
             setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
 
             JPanel panel = new JPanel();

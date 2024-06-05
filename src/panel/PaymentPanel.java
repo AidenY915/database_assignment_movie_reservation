@@ -35,7 +35,7 @@ public class PaymentPanel extends MovieReservationPanel {
         }
 
         JLabel paymentMethodLabel = new JLabel("Payment Method:");
-        String[] paymentMethods = {"카드", "현금", "관람권"};
+        String[] paymentMethods = {"카드", "현금"};
         paymentMethodComboBox = new JComboBox<>(paymentMethods);
         add(paymentMethodLabel);
         add(paymentMethodComboBox);

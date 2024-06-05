@@ -70,7 +70,6 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			this.bookingList = bookingList;
 			setSize(980, 480);
 			setLocation(4, 100);
-			setBackground(Color.BLUE);
 			setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
 
 			panel = new JPanel();
