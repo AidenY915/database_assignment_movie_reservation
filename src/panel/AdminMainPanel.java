@@ -14,7 +14,7 @@ public class AdminMainPanel extends MovieReservationPanel {
         setLayout(null);
 
         JLabel titleLabel = new JLabel("관리자 메인 페이지");
-        titleLabel.setBounds(400, 20, 200, 50);
+        titleLabel.setBounds(440, 20, 200, 50);
         add(titleLabel);
 
         JButton dbInitButton = new JButton("데이터베이스 초기화");

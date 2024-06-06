@@ -18,7 +18,7 @@ public class DBModifyPanel extends MovieReservationPanel {
 		setLayout(null);
 
 		JLabel titleLabel = new JLabel("SQL 입력");
-		titleLabel.setBounds(400, 50, 200, 50);
+		titleLabel.setBounds(440, 50, 200, 50);
 		add(titleLabel);
 
 		JTextArea sqlInputArea = new JTextArea();

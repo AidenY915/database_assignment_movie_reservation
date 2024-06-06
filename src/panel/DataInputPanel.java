@@ -19,7 +19,7 @@ public class DataInputPanel extends MovieReservationPanel {
 	private JComboBox<String> tableComboBox;
 	private JPanel inputPanel;
 	private Service service = Service.getService();
-	
+
 	public DataInputPanel() {
 		super();
 		init();
@@ -31,13 +31,13 @@ public class DataInputPanel extends MovieReservationPanel {
 		setLayout(null);
 
 		JLabel titleLabel = new JLabel("데이터 입력 페이지");
-		titleLabel.setBounds(400, 20, 200, 50);
+		titleLabel.setBounds(440, 20, 200, 50);
 		add(titleLabel);
 
-		String[] tables = { "선택", "movie", "actor", "casting", "screening_schedule", "screening_hall", "seat", "user",
+		String[] tables = { "movie", "actor", "casting", "screening_schedule", "screening_hall", "seat", "user",
 				"booking", "movie_ticket" };
 		tableComboBox = new JComboBox<>(tables);
-		tableComboBox.setBounds(400, 50, 200, 30);
+		tableComboBox.setBounds(400, 60, 200, 30);
 		add(tableComboBox);
 
 		inputPanel = new JPanel();
@@ -83,38 +83,41 @@ public class DataInputPanel extends MovieReservationPanel {
 		inputPanel.removeAll();
 		switch (tableName) {
 		case "movie":
-			currentColumns = new String[] { "movie_name", "running_time", "age_rating", "director_name", "Genre",
-					"release_date", "movie_info", "rating_information" };
+			currentColumns = new String[] { "movie_name (char(45))", "running_time (int)", "age_rating (int)",
+					"director_name (char(20))", "Genre (char(45))", "release_date (date)", "movie_info (text)",
+					"rating_information (decimal(3,1))" };
 			break;
 		case "actor":
-			currentColumns = new String[] { "actor_name" };
+			currentColumns = new String[] { "actor_name (char(20))" };
 			break;
 		case "casting":
-			currentColumns = new String[] { "actor_no", "movie_no" };
+			currentColumns = new String[] { "actor_no (int)", "movie_no (int)" };
 			break;
 		case "screening_schedule":
-			currentColumns = new String[] { "hall_no", "screening_date", "screening_day", "screening_session",
-					"screening_start_time", "movie_no" };
+			currentColumns = new String[] { "hall_no (int)", "screening_date (date)", "screening_day (char(3))",
+					"screening_session (int)", "screening_start_time (time)", "movie_no (int)" };
 			break;
 		case "screening_hall":
-			currentColumns = new String[] { "standard_price", "hall_name" };
+			currentColumns = new String[] { "standard_price (int)", "hall_name (char(20))" };
 			break;
 		case "seat":
-			currentColumns = new String[] { "hall_no", "seat_no" };
+			currentColumns = new String[] { "hall_no (int)", "seat_no (char(6))" };
 			break;
 		case "user":
-			currentColumns = new String[] { "user_id", "user_name", "phone_no", "email", "password", "is_admin" };
+			currentColumns = new String[] { "user_id (char(30))", "user_name (char(30))", "phone_no (char(11))",
+					"email (char(100))", "password (char(30))", "is_admin (tinyint)" };
 			break;
 		case "booking":
-			currentColumns = new String[] { "payment_method", "payment_status", "payment_amount", "schedule_no",
-					"seat_no", "user_id" };
+			currentColumns = new String[] { "payment_method (char(20))", "payment_status (char(20))",
+					"payment_amount (int)", "schedule_no (int)", "seat_no (char(3))", "user_id (char(30))" };
 			break;
 		case "movie_ticket":
-			currentColumns = new String[] { "ticket_no", "booking_no" };
+			currentColumns = new String[] { "ticket_no (int)", "booking_no (int)" };
 			break;
 		default:
-			currentColumns = new String[] { "movie_name", "running_time", "age_rating", "director_name", "Genre",
-					"release_date", "movie_info", "rating_information" };
+			currentColumns = new String[] { "movie_name (char(45))", "running_time (int)", "age_rating (int)",
+					"director_name (char(20))", "Genre (char(45))", "release_date (date)", "movie_info (text)",
+					"rating_information (decimal(3,1))" };
 			break;
 		}
 
