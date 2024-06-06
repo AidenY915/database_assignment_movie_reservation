@@ -120,6 +120,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			JLabel screeningTimeLabel = new JLabel("상영 시간: " + booking.getScreeningStartTime().toString());
 			JLabel paymentStatusLabel = new JLabel("결제 상태: " + booking.getPaymentStatus());
 			JLabel paymentAmountLabel = new JLabel("결제 금액: " + booking.getPaymentAmount());
+			JLabel paymentMethodLabel= new JLabel("결제 방법: "+ booking.getPaymentMethod());
 
 			bookingNoLabel.setBounds(10, 10, 200, 20);
 			movieNameLabel.setBounds(10, 30, 200, 20);
@@ -127,6 +128,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			screeningTimeLabel.setBounds(10, 70, 200, 20);
 			paymentStatusLabel.setBounds(220, 10, 200, 20);
 			paymentAmountLabel.setBounds(220, 30, 200, 20);
+			paymentMethodLabel.setBounds(220,50,200,20);
 
 			add(bookingNoLabel);
 			add(movieNameLabel);
@@ -134,6 +136,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			add(screeningTimeLabel);
 			add(paymentStatusLabel);
 			add(paymentAmountLabel);
+			add(paymentMethodLabel);
 
 			JButton editButton = new JButton("수정");
 			editButton.setBounds(760, 50, 80, 30);

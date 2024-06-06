@@ -27,7 +27,7 @@ public class TableViewPanel extends MovieReservationPanel {
         setLayout(null);
 
         JLabel titleLabel = new JLabel(tableName + " 테이블 보기 페이지");
-        titleLabel.setBounds(400, 50, 200, 50);
+        titleLabel.setBounds(440, 50, 200, 50);
         add(titleLabel);
 
         dataTable = new JTable();
