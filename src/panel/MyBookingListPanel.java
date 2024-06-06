@@ -118,27 +118,31 @@ public class MyBookingListPanel extends MovieReservationPanel {
 
 			JLabel bookingNoLabel = new JLabel("예약 번호: " + booking.getBookingNo());
 			JLabel movieNameLabel = new JLabel("영화 제목: " + booking.getMovieName());
+			JLabel hallNameLabel = new JLabel("상영관 : " + booking.getHallName());
 			JLabel seatNoLabel = new JLabel("좌석 번호: " + booking.getSeatNo());
 			JLabel screeningTimeLabel = new JLabel("상영 시간: " + booking.getScreeningStartTime().toString());
 			JLabel paymentStatusLabel = new JLabel("결제 상태: " + booking.getPaymentStatus());
 			JLabel paymentAmountLabel = new JLabel("결제 금액: " + booking.getPaymentAmount());
-			JLabel paymentMethodLabel= new JLabel("결제 방법: "+ booking.getPaymentMethod());
+			JLabel paymentMethodLabel = new JLabel("결제 방법: " + booking.getPaymentMethod());
 
 			bookingNoLabel.setBounds(10, 10, 200, 20);
 			movieNameLabel.setBounds(10, 30, 200, 20);
-			seatNoLabel.setBounds(10, 50, 200, 20);
-			screeningTimeLabel.setBounds(10, 70, 200, 20);
+			hallNameLabel.setBounds(10, 50, 200, 20);
+			seatNoLabel.setBounds(10, 70, 200, 20);
+			screeningTimeLabel.setBounds(220, 70, 200, 20);
 			paymentStatusLabel.setBounds(220, 10, 200, 20);
 			paymentAmountLabel.setBounds(220, 30, 200, 20);
-			paymentMethodLabel.setBounds(220,50,200,20);
+			paymentMethodLabel.setBounds(220, 50, 200, 20);
 
 			add(bookingNoLabel);
 			add(movieNameLabel);
+			add(hallNameLabel);
 			add(seatNoLabel);
 			add(screeningTimeLabel);
 			add(paymentStatusLabel);
 			add(paymentAmountLabel);
-			add(paymentMethodLabel);
+			if (booking.getPaymentMethod() != null)
+				add(paymentMethodLabel);
 
 			addMouseListener(new MouseListener() {
 
