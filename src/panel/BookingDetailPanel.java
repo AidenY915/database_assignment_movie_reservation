@@ -39,7 +39,7 @@ public class BookingDetailPanel extends MovieReservationPanel {
 		JLabel movieNameLabel = new JLabel("영화 제목: " + booking.getMovieName());
 		JLabel screeningStartTimeLabel = new JLabel("상영 시작 시간: " + startTimeStr);
 		JLabel hallNameLabel = new JLabel("상영관: " + booking.getHallName());
-		JLabel ticketIssueLabel = new JLabel("티켓 발급 여부: " + (service.isTicketIssued(booking) ? "발급됨" : "미발급" ));
+		JLabel ticketIssueLabel = new JLabel("티켓 발급 여부: " + (service.isTicketIssued(booking) ? "발급완료" : "미발급" ));
 		
 		contentPanel.add(title);
 		contentPanel.add(bookingNoLabel);
