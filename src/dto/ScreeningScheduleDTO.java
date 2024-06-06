@@ -12,9 +12,10 @@ public class ScreeningScheduleDTO {
 	private Time screeningStartTime;
 	private int movieNo;
 	private int standardPrice;
+	private String hallName;
 
 	public ScreeningScheduleDTO(int scheduleNo, int hallNo, Date screeningDate, String screeningDay,
-			int screeningSession, Time screeningStartTime, int movieNo, int standardPrice) {
+			int screeningSession, Time screeningStartTime, int movieNo, int standardPrice, String hallName) {
 		super();
 		this.scheduleNo = scheduleNo;
 		this.hallNo = hallNo;
@@ -24,6 +25,7 @@ public class ScreeningScheduleDTO {
 		this.screeningStartTime = screeningStartTime;
 		this.movieNo = movieNo;
 		this.standardPrice = standardPrice;
+		this.hallName = hallName;
 	}
 
 	public int getScheduleNo() {
@@ -89,4 +91,13 @@ public class ScreeningScheduleDTO {
 	public void setStandardPrice(int standardPrice) {
 		this.standardPrice = standardPrice;
 	}
+
+	public String getHallName() {
+		return hallName;
+	}
+
+	public void setHallName(String hallName) {
+		this.hallName = hallName;
+	}
+	
 }

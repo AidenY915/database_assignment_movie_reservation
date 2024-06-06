@@ -369,7 +369,7 @@ public class DAO implements DbInfo, SQLStatment {
 					ScreeningScheduleDTO ScreeningScheduleDTO = new ScreeningScheduleDTO(rs.getInt("schedule_no"),
 							rs.getInt("hall_no"), rs.getDate("screening_date"), rs.getString("screening_day"),
 							rs.getInt("screening_session"), rs.getTime("screening_start_time"), rs.getInt("movie_no"),
-							rs.getInt("standard_price"));
+							rs.getInt("standard_price"), rs.getString("hall_name"));
 					rsltSchedules.add(ScreeningScheduleDTO);
 				}
 			}

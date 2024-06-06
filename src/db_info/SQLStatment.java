@@ -17,7 +17,7 @@ public interface SQLStatment extends DbInfo {
 			+ " WHERE movie_name LIKE ? AND director_name LIKE ? AND genre LIKE ?"
 			+ " GROUP BY movie_no";
 	
-	final static String SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO = "SELECT A.*, standard_price"
+	final static String SELECT_SCREENING_SCHEDUELES_BY_MOVIE_NO = "SELECT A.*, standard_price, hall_name"
 			+ " FROM " + SCREENING_SCHEDULE_TABLE + " AS A INNER JOIN " + SCREENING_HALL_TABLE + " AS B ON A.hall_no = B.hall_no"
 			+ " WHERE movie_no = ?"; 
 	

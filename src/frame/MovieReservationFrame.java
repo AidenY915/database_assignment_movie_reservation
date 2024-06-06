@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import dto.UserDTO;
 import panel.AdminLoginPanel;
@@ -149,6 +150,10 @@ public class MovieReservationFrame extends JFrame {
 			}
 		});
 		add(backButton);
+		
+		JLabel todayLabel = new JLabel("오늘: " + TODAY.toString());
+		todayLabel.setBounds(WIDTH - 150, 25, 150, 50);
+		add(todayLabel);
 
         changePanel(loginChoicePanel);
         setVisible(true);

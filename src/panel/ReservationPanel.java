@@ -152,7 +152,9 @@ public class ReservationPanel extends MovieReservationPanel {
         public ScheduleBtn(ScreeningScheduleDTO scheduleDTO, ReservationPanel reservationPanel) {
         	String[] dateStrArr = scheduleDTO.getScreeningDate().toString().split("-");
         	String dateForm = dateStrArr[0] + "년 " + dateStrArr[1] + "월 " + dateStrArr[2] + "일";
-            setText(dateForm + " " + scheduleDTO.getScreeningStartTime().toString().substring(0, 5));
+        	String text = "<html><body>" + dateForm + " " + scheduleDTO.getScreeningStartTime().toString().substring(0, 5);
+        	text += "<br>상영관: " + scheduleDTO.getHallName() + "</body></html>";
+            setText(text);
             this.scheduleDTO = scheduleDTO;
             this.reservationPanel = reservationPanel;
             addActionListener(new SelectScheduleListener());

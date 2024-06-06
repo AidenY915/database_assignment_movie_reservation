@@ -119,7 +119,8 @@ public class MovieListPanel extends MovieReservationPanel {
 		currentMovieListScrollpane = new MovieListScrollPane(movieList);
 		add(currentMovieListScrollpane);
 		revalidate();
-		repaint();
+		MovieReservationFrame.getMovieReservationFrame().repaint();
+		
 	}
 
 	public void setEditMode(BookingDTO booking) {
