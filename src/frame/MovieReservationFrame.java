@@ -49,15 +49,16 @@ public class MovieReservationFrame extends JFrame {
 	private MovieReservationPanel reservationPanel = new ReservationPanel();
 	private MovieReservationPanel seatSelectionPanel = new SeatSelectionPanel();
 	private MovieReservationPanel paymentPanel = new PaymentPanel();
-	private MovieReservationPanel myBookingListPanel= new MyBookingListPanel();
+	private MovieReservationPanel myBookingListPanel = new MyBookingListPanel();
 	private MovieReservationPanel bookingDetailPanel = new BookingDetailPanel();
-    private Stack<MovieReservationPanel> panelStack = new Stack<>();
-    private JButton backButton;
-    public static final Date TODAY = new Date(2024-1900, 5, 7); // 2024년 6월 7일;
-    
-    public MovieReservationPanel getCurrentPanel() {
-        return currentPanel;
-    }
+	private Stack<MovieReservationPanel> panelStack = new Stack<>();
+	private JButton backButton;
+	private JButton toMainButton = new JButton();
+	public static final Date TODAY = new Date(2024 - 1900, 5, 7); // 2024년 6월 7일;
+
+	public MovieReservationPanel getCurrentPanel() {
+		return currentPanel;
+	}
 
 	public MovieReservationPanel getLoginChoicePanel() {
 		return loginChoicePanel;
@@ -122,6 +123,7 @@ public class MovieReservationFrame extends JFrame {
 	public MovieReservationPanel getPaymentPanel() {
 		return paymentPanel;
 	}
+
 	public MovieReservationPanel getBookingDetailPanel() {
 		return bookingDetailPanel;
 	}
@@ -150,16 +152,20 @@ public class MovieReservationFrame extends JFrame {
 			}
 		});
 		add(backButton);
-		
+
 		JLabel todayLabel = new JLabel("오늘: " + TODAY.toString());
 		todayLabel.setBounds(WIDTH - 150, 25, 150, 50);
 		add(todayLabel);
 
-        changePanel(loginChoicePanel);
-        setVisible(true);
-        
-        System.out.println("Today : " + TODAY.toString());
-    }
+		toMainButton.setBounds(10, 700, 100, 30);
+		add(toMainButton);
+
+		changePanel(loginChoicePanel);
+		setVisible(true);
+
+		System.out.println("Today : " + TODAY.toString());
+
+	}
 
 	// 싱글톤 패턴 생성자 대신 호출
 	static public MovieReservationFrame getMovieReservationFrame() {
@@ -177,6 +183,7 @@ public class MovieReservationFrame extends JFrame {
 		getContentPane().add(nextPanel);
 		nextPanel.setVisible(true);
 		currentPanel = nextPanel;
+		showToMainButton(currentPanel);
 		revalidate();
 		repaint();
 	}
@@ -188,10 +195,51 @@ public class MovieReservationFrame extends JFrame {
 			getContentPane().add(previousPanel);
 			previousPanel.setVisible(true);
 			currentPanel = previousPanel;
+			showToMainButton(currentPanel);
 			revalidate();
 			repaint();
 		}
 	}
 
-	
+	public void showToMainButton(MovieReservationPanel panel) {
+		MovieReservationPanel nextPanel;
+		toMainButton.setVisible(false);
+		toMainButton.setText("메인으로");
+		if (panel != null && panel != loginChoicePanel && panel != movieListPanel && panel != adminMainPanel
+				&& panel != userLoginPanel && panel != adminLoginPanel) {
+			if (loginSession == null)
+				return;
+			toMainButton.setVisible(true);
+			if (loginSession.isAdmin() == 1) {
+				nextPanel = adminMainPanel;
+			} else {
+				nextPanel = movieListPanel;
+			}
+			for (ActionListener al : toMainButton.getActionListeners())
+				toMainButton.removeActionListener(al);
+			toMainButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					changePanel(nextPanel);
+
+				}
+			});
+		} else if (panel == adminMainPanel || panel == movieListPanel) {
+			toMainButton.setVisible(true);
+			toMainButton.setText("로그아웃");
+			nextPanel = loginChoicePanel;
+			for (ActionListener al : toMainButton.getActionListeners())
+				toMainButton.removeActionListener(al);
+			toMainButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					changePanel(nextPanel);
+					panelStack.clear();
+					loginSession = null;
+				}
+			});
+
+		}
+	}
+
 }
