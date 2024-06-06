@@ -201,7 +201,8 @@ public class MyBookingListPanel extends MovieReservationPanel {
 
 			JButton issueTicketButton = new JButton("티켓 발급");
 			issueTicketButton.setBounds(640, 50, 110, 30);
-			add(issueTicketButton);
+			if(booking.getPaymentStatus().equals("결제완료"))
+				add(issueTicketButton);
 
 			issueTicketButton.addActionListener(new ActionListener() {
 
@@ -213,7 +214,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 
 			if (booking.getPaymentStatus().equals("미결제")) {
 				JButton paymentButton = new JButton("결제하기");
-				paymentButton.setBounds(520, 50, 110, 30);
+				paymentButton.setBounds(640, 50, 110, 30);
 				add(paymentButton);
 				paymentButton.addActionListener(new ActionListener() {
 
