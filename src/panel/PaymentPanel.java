@@ -1,13 +1,15 @@
 package panel;
 
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import dto.BookingDTO;
 import frame.MovieReservationFrame;
 import service.Service;
@@ -24,7 +26,7 @@ public class PaymentPanel extends MovieReservationPanel {
     @Override
     public void init() {
         removeAll();
-        setLayout(new GridLayout(4, 2));
+        setLayout(null);
         int totalAmount = 0;
         if (bookings == null) {
             MovieReservationFrame.getMovieReservationFrame().goBack();
@@ -34,13 +36,13 @@ public class PaymentPanel extends MovieReservationPanel {
             totalAmount += booking.getPaymentAmount();
         }
 
-        JLabel paymentMethodLabel = new JLabel("Payment Method:");
+        JLabel paymentMethodLabel = new JLabel("결제 방법 선택:");
         String[] paymentMethods = {"카드", "현금"};
         paymentMethodComboBox = new JComboBox<>(paymentMethods);
         add(paymentMethodLabel);
         add(paymentMethodComboBox);
 
-        JLabel paymentAmountLabel = new JLabel("Payment Amount: " + totalAmount);
+        JLabel paymentAmountLabel = new JLabel("총 결제 금액: " + totalAmount + "원");
         add(paymentAmountLabel);
 
         paymentButton = new JButton("결제 완료");
@@ -51,6 +53,15 @@ public class PaymentPanel extends MovieReservationPanel {
             }
         });
         add(paymentButton);
+        
+        paymentMethodLabel.setBounds(300, 245, 400, 50);
+        paymentMethodLabel.setFont(new Font(getFont().getName(), getFont().getStyle(), 14));
+        paymentMethodComboBox.setBounds(300, 305, 400, 50);
+        paymentMethodComboBox.setFont(new Font(getFont().getName(), getFont().getStyle(), 12));
+        paymentAmountLabel.setBounds(300, 360, 400, 50);
+        paymentAmountLabel.setFont(new Font(getFont().getName(), getFont().getStyle(), 14));
+        paymentButton.setBounds(300, 515, 400, 50);
+        
     }
 
     private void makePayment() {

@@ -21,215 +21,226 @@ import frame.MovieReservationFrame;
 import service.Service;
 
 public class MovieListPanel extends MovieReservationPanel {
-    private Service service = Service.getService();
-    private List<MovieDTO> movieList;
-    private MovieListScrollPane currentMovieListScrollpane;
-    private JButton myListButton;
-    private boolean isEditMode = false;
-    private BookingDTO bookingToEdit;
+	private Service service = Service.getService();
+	private List<MovieDTO> movieList;
+	private MovieListScrollPane currentMovieListScrollpane;
+	private JButton myListButton;
+	private boolean isEditMode = false;
+	private BookingDTO bookingToEdit;
 
-    public MovieListPanel() {
-    }
+	public MovieListPanel() {
+	}
 
-    @Override
-    public void init() {
-        removeAll();
+	@Override
+	public void init() {
+		removeAll();
 
-        setLayout(null);
-        JLabel titleLabel = new JLabel("영화 목록");
+		setLayout(null);
+		JLabel titleLabel = new JLabel("영화 목록");
 
-        JLabel movieName = new JLabel("영화 제목");
-        JLabel directorName = new JLabel("감독 이름");
-        JLabel actorName = new JLabel("배우 이름");
-        JLabel genre = new JLabel("영화 장르");
+		JLabel movieName = new JLabel("영화 제목");
+		JLabel directorName = new JLabel("감독 이름");
+		JLabel actorName = new JLabel("배우 이름");
+		JLabel genre = new JLabel("영화 장르");
 
-        JTextField movieNameField = new JTextField();
-        JTextField directorNameField = new JTextField();
-        JTextField actorNameField = new JTextField();
-        JTextField genreField = new JTextField();
-        myListButton = new JButton("내 예매 내역 보기");
-        myListButton.setBounds(750, 10, 200, 30);
-        myListButton.addActionListener(e -> {
-            MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-            frame.changePanel(frame.getMyBookingListPanel());
-        });
-        add(myListButton);
+		JTextField movieNameField = new JTextField();
+		JTextField directorNameField = new JTextField();
+		JTextField actorNameField = new JTextField();
+		JTextField genreField = new JTextField();
+		myListButton = new JButton("내 예매 내역 보기");
+		myListButton.setBounds(750, 10, 200, 30);
+		myListButton.addActionListener(e -> {
+			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+			frame.changePanel(frame.getMyBookingListPanel());
+		});
+		add(myListButton);
 
-        add(titleLabel);
-        add(movieName);
-        add(directorName);
-        add(actorName);
-        add(genre);
-        add(movieNameField);
-        add(directorNameField);
-        add(actorNameField);
-        add(genreField);
+		add(titleLabel);
+		add(movieName);
+		add(directorName);
+		add(actorName);
+		add(genre);
+		add(movieNameField);
+		add(directorNameField);
+		add(actorNameField);
+		add(genreField);
 
-        titleLabel.setBounds(440, 20, 100, 50);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 20));
-        titleLabel.setForeground(Color.BLUE);
+		titleLabel.setBounds(440, 20, 100, 50);
+		titleLabel.setFont(new Font(getFont().getName(), Font.BOLD, 20));
 
-        movieName.setBounds(30, 70, 80, 50);
-        movieNameField.setBounds(90, 75, 140, 40);
+		movieName.setBounds(30, 70, 80, 50);
+		movieNameField.setBounds(90, 75, 140, 40);
 
-        directorName.setBounds(250, 70, 80, 50);
-        directorNameField.setBounds(320, 75, 140, 40);
+		directorName.setBounds(250, 70, 80, 50);
+		directorNameField.setBounds(320, 75, 140, 40);
 
-        actorName.setBounds(500, 70, 80, 50);
-        actorNameField.setBounds(560, 75, 140, 40);
+		actorName.setBounds(500, 70, 80, 50);
+		actorNameField.setBounds(560, 75, 140, 40);
 
-        genre.setBounds(750, 70, 80, 50);
-        genreField.setBounds(810, 75, 140, 40);
+		genre.setBounds(750, 70, 80, 50);
+		genreField.setBounds(810, 75, 140, 40);
 
-        SearchButton searchButton = new SearchButton(this, movieNameField, directorNameField, actorNameField, genreField);
-        add(searchButton);
-        searchButton.setBounds(440, 150, 100, 50);
+		SearchButton searchButton = new SearchButton(this, movieNameField, directorNameField, actorNameField,
+				genreField);
+		add(searchButton);
+		searchButton.setBounds(440, 150, 100, 50);
 
-        searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(), genreField.getText());
-    }
+		searchMovieList(movieNameField.getText(), directorNameField.getText(), actorNameField.getText(),
+				genreField.getText());
+		
+		if(bookingToEdit == null) {
+			JButton moveToReservationBtn = new MoveToReservationBtn(null, bookingToEdit);
+			add(moveToReservationBtn);
+			moveToReservationBtn.setBounds(450, 700, 100, 50);
+		}
+	}
 
-    private List<MovieDTO> getMovieList(String title, String director, String actor, String genre) {
-        title = title.trim();
-        director = director.trim();
-        String[] actorArray = actor.trim().split(" ");
-        genre = genre.trim();
-        if (service == null) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return getMovieList(title, director, actor, genre);
-        } else {
-            return service.getMovieList(title, director, actorArray, genre);
-        }
-    }
+	private List<MovieDTO> getMovieList(String title, String director, String actor, String genre) {
+		title = title.trim();
+		director = director.trim();
+		String[] actorArray = actor.trim().split(" ");
+		genre = genre.trim();
+		if (service == null) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return getMovieList(title, director, actor, genre);
+		} else {
+			return service.getMovieList(title, director, actorArray, genre);
+		}
+	}
 
-    void searchMovieList(String title, String director, String actor, String genre) {
-        movieList = getMovieList(title, director, actor, genre);
-        if (currentMovieListScrollpane != null)
-            this.remove(currentMovieListScrollpane);
-        currentMovieListScrollpane = new MovieListScrollPane(movieList);
-        add(currentMovieListScrollpane);
-        revalidate();
-        repaint();
-    }
+	void searchMovieList(String title, String director, String actor, String genre) {
+		movieList = getMovieList(title, director, actor, genre);
+		if (currentMovieListScrollpane != null)
+			this.remove(currentMovieListScrollpane);
+		currentMovieListScrollpane = new MovieListScrollPane(movieList);
+		add(currentMovieListScrollpane);
+		revalidate();
+		repaint();
+	}
 
-    public void setEditMode(BookingDTO booking) {
-        this.isEditMode = true;
-        this.bookingToEdit = booking;
-    }
+	public void setEditMode(BookingDTO booking) {
+		this.isEditMode = true;
+		this.bookingToEdit = booking;
+	}
 
-    class MovieListScrollPane extends JScrollPane {
-        List<MovieDTO> movieList;
-        final static int WIDTH = MovieReservationFrame.WIDTH - 20;
-        private final static int HEIGHT = MovieReservationFrame.HEIGHT / 7 * 4;
-        private final static int Y = MovieReservationFrame.HEIGHT / 7 * 2;
+	class MovieListScrollPane extends JScrollPane {
+		List<MovieDTO> movieList;
+		final static int WIDTH = MovieReservationFrame.WIDTH - 20;
+		private final static int HEIGHT = MovieReservationFrame.HEIGHT / 7 * 4;
+		private final static int Y = MovieReservationFrame.HEIGHT / 7 * 2;
 
-        public MovieListScrollPane(List<MovieDTO> movieList) throws HeadlessException {
-            super();
-            this.movieList = movieList;
-            setSize(WIDTH, HEIGHT);
-            setLayout(new ScrollPaneLayout());
-            setLocation(4, Y);
-            setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+		public MovieListScrollPane(List<MovieDTO> movieList) throws HeadlessException {
+			super();
+			this.movieList = movieList;
+			setSize(WIDTH, HEIGHT);
+			setLayout(new ScrollPaneLayout());
+			setLocation(4, Y);
+			setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
 
-            JPanel panel = new JPanel();
-            panel.setPreferredSize(new Dimension(WIDTH - 20, movieList.size() * MovieDTOPanel.HEIGHT));
-            panel.setLayout(null);
+			JPanel panel = new JPanel();
+			panel.setPreferredSize(new Dimension(WIDTH - 20, movieList.size() * MovieDTOPanel.HEIGHT));
+			panel.setLayout(null);
 
-            setViewportView(panel);
+			setViewportView(panel);
 
-            int i = 0;
-            for (MovieDTO movie : movieList) {
-                panel.add(new MovieDTOPanel(movie, 0, i * MovieDTOPanel.HEIGHT));
-                i++;
-            }
-        }
-    }
+			int i = 0;
+			for (MovieDTO movie : movieList) {
+				panel.add(new MovieDTOPanel(movie, 0, i * MovieDTOPanel.HEIGHT));
+				i++;
+			}
+		}
+	}
 
-    class MovieDTOPanel extends JPanel {
-        private MovieDTO movieDTO;
-        final static int WIDTH = MovieListScrollPane.WIDTH - 20;
-        final static int HEIGHT = 100;
+	class MovieDTOPanel extends JPanel {
+		private MovieDTO movieDTO;
+		final static int WIDTH = MovieListScrollPane.WIDTH - 20;
+		final static int HEIGHT = 100;
 
-        public MovieDTOPanel(MovieDTO movieDTO, int x, int y) {
-            this.movieDTO = movieDTO;
-            setBounds(x, y, WIDTH, HEIGHT);
+		public MovieDTOPanel(MovieDTO movieDTO, int x, int y) {
+			this.movieDTO = movieDTO;
+			setBounds(x, y, WIDTH, HEIGHT);
 
-            JLabel movieNameLabel = new JLabel(movieDTO.getMovieName());
+			JLabel movieNameLabel = new JLabel(movieDTO.getMovieName());
 
-            add(movieNameLabel);
-            addMouseListener(new moveToDetailClickListener(movieDTO));
-        }
+			add(movieNameLabel);
+			addMouseListener(new moveToDetailClickListener(movieDTO));
 
-        @Override
-        public void paint(Graphics g) {
-            super.paint(g);
-            g.setColor(Color.BLACK);
-            g.drawRect(5, 5, WIDTH - 10, HEIGHT - 10);
-        }
+			movieNameLabel.setFont(new Font(getFont().getName(), Font.BOLD, 18));
+			movieNameLabel.setBounds(0, 0, WIDTH, HEIGHT);
+			movieNameLabel.setHorizontalAlignment(JLabel.CENTER);
+			movieNameLabel.setVerticalAlignment(JLabel.CENTER);
+		}
 
-        class moveToDetailClickListener implements MouseListener {
-            private MovieDTO movieDTO;
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			g.setColor(Color.BLACK);
+			g.drawRect(5, 5, WIDTH - 10, HEIGHT - 10);
+		}
 
-            moveToDetailClickListener(MovieDTO movieDTO) {
-                this.movieDTO = movieDTO;
-            }
+		class moveToDetailClickListener implements MouseListener {
+			private MovieDTO movieDTO;
 
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
+			moveToDetailClickListener(MovieDTO movieDTO) {
+				this.movieDTO = movieDTO;
+			}
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
 
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-                if (isEditMode) {
-                    MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
-                    movieDetailPanel.setBookingToEdit(bookingToEdit); // booking 정보 전달
-                    System.out.println(bookingToEdit);
-                    movieDetailPanel.setMovieDTO(movieDTO);
-                    frame.changePanel(movieDetailPanel);
-                } else {
-                    MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
-                    movieDetailPanel.setMovieDTO(movieDTO);
-                    frame.changePanel(movieDetailPanel);
-                }
-            }
-        }
-    }
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
 
-    class SearchButton extends JButton {
-        private MovieListPanel movieListPanel;
-        private JTextField movieNameField;
-        private JTextField directorNameField;
-        private JTextField actorNameField;
-        private JTextField genreField;
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+				if (isEditMode) {
+					MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
+					movieDetailPanel.setBookingToEdit(bookingToEdit); // booking 정보 전달
+					System.out.println(bookingToEdit);
+					movieDetailPanel.setMovieDTO(movieDTO);
+					frame.changePanel(movieDetailPanel);
+				} else {
+					MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
+					movieDetailPanel.setMovieDTO(movieDTO);
+					frame.changePanel(movieDetailPanel);
+				}
+			}
+		}
+	}
 
-        SearchButton(MovieListPanel movieListPanel, JTextField movieNameField, JTextField directorNameField,
-                     JTextField actorNameField, JTextField genreField) {
-            super("영화 검색");
-            this.movieListPanel = movieListPanel;
-            this.movieNameField = movieNameField;
-            this.directorNameField = directorNameField;
-            this.actorNameField = actorNameField;
-            this.genreField = genreField;
+	class SearchButton extends JButton {
+		private MovieListPanel movieListPanel;
+		private JTextField movieNameField;
+		private JTextField directorNameField;
+		private JTextField actorNameField;
+		private JTextField genreField;
 
-            this.addActionListener(e -> movieListPanel.searchMovieList(
-                movieNameField.getText(), directorNameField.getText(), actorNameField.getText(), genreField.getText()
-            ));
-        }
-    }
+		SearchButton(MovieListPanel movieListPanel, JTextField movieNameField, JTextField directorNameField,
+				JTextField actorNameField, JTextField genreField) {
+			super("영화 검색");
+			this.movieListPanel = movieListPanel;
+			this.movieNameField = movieNameField;
+			this.directorNameField = directorNameField;
+			this.actorNameField = actorNameField;
+			this.genreField = genreField;
+
+			this.addActionListener(e -> movieListPanel.searchMovieList(movieNameField.getText(),
+					directorNameField.getText(), actorNameField.getText(), genreField.getText()));
+		}
+	}
 }

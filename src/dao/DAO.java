@@ -538,6 +538,22 @@ public class DAO implements DbInfo, SQLStatment {
 			return false;
 		}
 	}
+
+	public boolean isTicketIssued(int bookingNo) {
+		boolean rslt = false;
+		try (Connection conn = DriverManager.getConnection(DATABASE_URL, DbId, DbPw);
+				PreparedStatement selectTicketStmt = conn.prepareStatement(SELECT_TICKET);) {
+			selectTicketStmt.setInt(1, bookingNo);
+			try (ResultSet rs = selectTicketStmt.executeQuery()) {
+				if (rs.next()) {
+					rslt = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rslt;
+	}
 	
 
 }

@@ -39,4 +39,6 @@ public interface SQLStatment extends DbInfo {
 	final static String DELETE_TICKET = "DELETE FROM " + TICKET_TABLE + " WHERE booking_no = ?";
 	
 	final static String INSERT_TICKET = "INSERT INTO " + TICKET_TABLE + "(booking_no) VALUES(?)";
+	
+	final static String SELECT_TICKET = "SELECT * FROM " + TICKET_TABLE + " WHERE booking_no = ?";
 }

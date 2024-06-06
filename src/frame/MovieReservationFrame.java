@@ -12,6 +12,7 @@ import dto.UserDTO;
 import panel.AdminLoginPanel;
 import panel.AdminMainPanel;
 import panel.AdminRegisterPanel;
+import panel.BookingDetailPanel;
 import panel.DBInitPanel;
 import panel.DBManipulationPanel;
 import panel.DBModifyPanel;
@@ -48,6 +49,7 @@ public class MovieReservationFrame extends JFrame {
 	private MovieReservationPanel seatSelectionPanel = new SeatSelectionPanel();
 	private MovieReservationPanel paymentPanel = new PaymentPanel();
 	private MovieReservationPanel myBookingListPanel= new MyBookingListPanel();
+	private MovieReservationPanel bookingDetailPanel = new BookingDetailPanel();
     private Stack<MovieReservationPanel> panelStack = new Stack<>();
     private JButton backButton;
     public static final Date TODAY = new Date(2024-1900, 5, 7); // 2024년 6월 7일;
@@ -119,6 +121,9 @@ public class MovieReservationFrame extends JFrame {
 	public MovieReservationPanel getPaymentPanel() {
 		return paymentPanel;
 	}
+	public MovieReservationPanel getBookingDetailPanel() {
+		return bookingDetailPanel;
+	}
 
 	public UserDTO getLoginSession() {
 		return loginSession;
@@ -182,4 +187,6 @@ public class MovieReservationFrame extends JFrame {
 			repaint();
 		}
 	}
+
+	
 }

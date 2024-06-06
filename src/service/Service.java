@@ -137,4 +137,7 @@ public class Service {
 		dao.deleteTicket(booking);
 		dao.insertTicket(booking);
 	}
+	public boolean isTicketIssued(BookingDTO booking) {
+		return dao.isTicketIssued(booking.getBookingNo());
+	}
 }

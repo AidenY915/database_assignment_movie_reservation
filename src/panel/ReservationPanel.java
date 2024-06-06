@@ -1,14 +1,16 @@
 package panel;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import dto.BookingDTO;
 import dto.MovieDTO;
 import dto.ScreeningScheduleDTO;
@@ -41,13 +43,21 @@ public class ReservationPanel extends MovieReservationPanel {
             comboBox.setSelectedItem(selectedMovie);
 
         SubmitBtn submitBtn = new SubmitBtn(this);
-
+        JLabel movieSelectLabel = new JLabel("영화 선택");
+        JLabel scheduleSelectLabel = new JLabel("상영 일정 선택");
+        
         add(comboBox);
+        add(movieSelectLabel);
         add(schedulePanel);
+        add(scheduleSelectLabel);
         add(submitBtn);
 
-        comboBox.setBounds(10, 100, 200, 50);
+        comboBox.setBounds(300, 100, 400, 50);
         comboBox.addActionListener(new SelectMovieListener(this));
+        movieSelectLabel.setBounds(300, 45, 400, 50);
+        movieSelectLabel.setFont(new Font(this.getFont().getName(), Font.BOLD, 20));
+        scheduleSelectLabel.setBounds(300, 230, 400, 50);
+        scheduleSelectLabel.setFont(new Font(this.getFont().getName(), Font.BOLD, 20));
         submitBtn.setBounds(350, 700, 300, 50);
 
         if (!isEditMode) {
@@ -140,8 +150,9 @@ public class ReservationPanel extends MovieReservationPanel {
         private ReservationPanel reservationPanel;
 
         public ScheduleBtn(ScreeningScheduleDTO scheduleDTO, ReservationPanel reservationPanel) {
-            super(scheduleDTO.getScreeningDate().toString() + " "
-                    + scheduleDTO.getScreeningStartTime().toString().substring(0, 5));
+        	String[] dateStrArr = scheduleDTO.getScreeningDate().toString().split("-");
+        	String dateForm = dateStrArr[0] + "년 " + dateStrArr[1] + "월 " + dateStrArr[2] + "일";
+            setText(dateForm + " " + scheduleDTO.getScreeningStartTime().toString().substring(0, 5));
             this.scheduleDTO = scheduleDTO;
             this.reservationPanel = reservationPanel;
             addActionListener(new SelectScheduleListener());

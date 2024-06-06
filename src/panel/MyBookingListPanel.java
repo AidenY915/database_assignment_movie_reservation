@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,8 +38,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 		JLabel titleLabel = new JLabel("내 예약 목록");
 		add(titleLabel);
 		titleLabel.setBounds(440, 20, 200, 50);
-		titleLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		titleLabel.setForeground(Color.BLUE);
+		titleLabel.setFont(new Font(getFont().getName(), Font.BOLD, 20));
 
 		MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
 		UserDTO loginUser = frame.getLoginSession();
@@ -52,6 +54,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 
 	private void loadBookings(String userId) {
 		bookingList = service.getBookingByUserId(userId);
+		bookingList.sort((o1, o2) -> -(o1.getBookingNo() - o2.getBookingNo()));
 		if (currentBookingListScrollPane != null) {
 			remove(currentBookingListScrollPane);
 		}
@@ -134,6 +137,30 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			add(paymentStatusLabel);
 			add(paymentAmountLabel);
 
+			addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					moveToBookingDetail();
+				}
+			});
+
 			JButton editButton = new JButton("수정");
 			editButton.setBounds(760, 50, 80, 30);
 			add(editButton);
@@ -164,29 +191,29 @@ public class MyBookingListPanel extends MovieReservationPanel {
 					deleteBooking();
 				}
 			});
-			
+
 			JButton issueTicketButton = new JButton("티켓 발급");
 			issueTicketButton.setBounds(640, 50, 110, 30);
 			add(issueTicketButton);
-			
+
 			issueTicketButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					issueTicket();
 				}
 			});
-			
-			if(booking.getPaymentStatus().equals("미결제")) {
+
+			if (booking.getPaymentStatus().equals("미결제")) {
 				JButton paymentButton = new JButton("결제하기");
 				paymentButton.setBounds(520, 50, 110, 30);
 				add(paymentButton);
 				paymentButton.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-						PaymentPanel paymentPanel = (PaymentPanel)frame.getPaymentPanel();
+						PaymentPanel paymentPanel = (PaymentPanel) frame.getPaymentPanel();
 						List<BookingDTO> bookingList = new LinkedList<>();
 						bookingList.add(booking);
 						paymentPanel.setBookings(bookingList);
@@ -194,25 +221,24 @@ public class MyBookingListPanel extends MovieReservationPanel {
 					}
 				});
 			}
-			
+
 		}
 
 		private void editSchedule() {
-		    MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-		    ReservationPanel reservationPanel = (ReservationPanel) frame.getReservationPanel();
-		    reservationPanel.setEditMode(booking, true); // 상영 일정 변경
+			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+			ReservationPanel reservationPanel = (ReservationPanel) frame.getReservationPanel();
+			reservationPanel.setEditMode(booking, true); // 상영 일정 변경
 			System.out.println(booking);
-		    frame.changePanel(reservationPanel);
+			frame.changePanel(reservationPanel);
 		}
 
 		private void editMovie() {
-		    MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-		    MovieListPanel movieListPanel = (MovieListPanel) frame.getMovieListPanel();
-		    movieListPanel.setEditMode(booking); // 영화 변경
-		    System.out.println(booking);
-		    frame.changePanel(movieListPanel);
+			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+			MovieListPanel movieListPanel = (MovieListPanel) frame.getMovieListPanel();
+			movieListPanel.setEditMode(booking); // 영화 변경
+			System.out.println(booking);
+			frame.changePanel(movieListPanel);
 		}
-
 
 		private void deleteBooking() {
 			String[] options = { "삭제", "취소" };
@@ -233,11 +259,19 @@ public class MyBookingListPanel extends MovieReservationPanel {
 				}
 			}
 		}
+
 		private void issueTicket() {
 			service.issueTicket(booking);
-			String[] options = {"확인"};
-			JOptionPane.showOptionDialog(this, "티켓이 발급되었습니다.", "티켓 발급",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+			String[] options = { "확인" };
+			JOptionPane.showOptionDialog(this, "티켓이 발급되었습니다.", "티켓 발급", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		}
+
+		private void moveToBookingDetail() {
+			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
+			BookingDetailPanel detailPanel = (BookingDetailPanel) frame.getBookingDetailPanel();
+			detailPanel.setBooking(booking);
+			frame.changePanel(detailPanel);
 		}
 	}
 }
