@@ -135,7 +135,7 @@ public class MovieReservationFrame extends JFrame {
 	}
 
 	private MovieReservationFrame() {
-		super();
+		super("영화 예매 프로그램 ( 19011477 윤종석 & 19011499 한신 )");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocation(50, 50);
