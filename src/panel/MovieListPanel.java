@@ -213,7 +213,6 @@ public class MovieListPanel extends MovieReservationPanel {
 				if (isEditMode) {
 					MovieDetailPanel movieDetailPanel = (MovieDetailPanel) frame.getMovieDetailPanel();
 					movieDetailPanel.setBookingToEdit(bookingToEdit); // booking 정보 전달
-					System.out.println(bookingToEdit);
 					movieDetailPanel.setMovieDTO(movieDTO);
 					frame.changePanel(movieDetailPanel);
 				} else {

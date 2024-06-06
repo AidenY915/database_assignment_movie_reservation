@@ -34,7 +34,6 @@ public class ReservationPanel extends MovieReservationPanel {
         removeAll();
         setLayout(null);
         comboBox = new JComboBox<>();
-        System.out.println(bookingToEdit);
         movieList = service.getAllMovies();
         for (MovieDTO movie : movieList) {
             comboBox.addItem(movie);

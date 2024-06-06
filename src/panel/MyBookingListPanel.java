@@ -236,7 +236,6 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
 			ReservationPanel reservationPanel = (ReservationPanel) frame.getReservationPanel();
 			reservationPanel.setEditMode(booking, true); // 상영 일정 변경
-			System.out.println(booking);
 			frame.changePanel(reservationPanel);
 		}
 
@@ -244,7 +243,6 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
 			MovieListPanel movieListPanel = (MovieListPanel) frame.getMovieListPanel();
 			movieListPanel.setEditMode(booking); // 영화 변경
-			System.out.println(booking);
 			frame.changePanel(movieListPanel);
 		}
 

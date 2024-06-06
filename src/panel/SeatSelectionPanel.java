@@ -32,7 +32,6 @@ public class SeatSelectionPanel extends MovieReservationPanel {
     public void init() {
         removeAll();
         setSeatList();
-        System.out.println(bookingToEdit);
         selectedSeats = new LinkedList<SeatDTO>();
         setLayout(null);
 
