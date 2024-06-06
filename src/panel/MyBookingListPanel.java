@@ -141,7 +141,7 @@ public class MyBookingListPanel extends MovieReservationPanel {
 			add(screeningTimeLabel);
 			add(paymentStatusLabel);
 			add(paymentAmountLabel);
-			if (booking.getPaymentMethod() != null)
+			if (booking.getPaymentMethod() != null && booking.getPaymentStatus().equals("결제완료"))
 				add(paymentMethodLabel);
 
 			addMouseListener(new MouseListener() {
