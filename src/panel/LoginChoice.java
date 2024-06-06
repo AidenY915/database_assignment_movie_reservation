@@ -19,8 +19,7 @@ public class LoginChoice extends MovieReservationPanel {
 		setLayout(null);
 		JLabel titleLabel = new JLabel("로그인 선택");
 		titleLabel.setBounds(440, 20, 300, 50);
-		titleLabel.setFont(new Font("Serif", Font.BOLD, 15));
-		titleLabel.setForeground(Color.BLUE);
+		titleLabel.setFont(new Font(getFont().getName(), Font.BOLD, 15));
 
 		add(titleLabel);
 

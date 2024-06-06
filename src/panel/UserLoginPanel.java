@@ -17,67 +17,63 @@ import service.Service;
 public class UserLoginPanel extends MovieReservationPanel {
 	public UserLoginPanel() {
 		super();
-		init();
-
 	}
 
 	@Override
 	public void init() {
 		setLayout(null);
-		
-		JLabel titleLabel=new JLabel("사용자 로그인");
-		JLabel orLabel=new JLabel("=====================또는=====================");
-		
-		
+
+		JLabel titleLabel = new JLabel("사용자 로그인");
+		JLabel orLabel = new JLabel("=====================또는=====================");
+
 		JTextField idTextField = new JTextField("ID를 입력하세요");
 		JTextField passwordTextField = new JTextField("패스워드를 입력하세요");
-		
+
 		idTextField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-            	
-                if (idTextField.getText().equals("ID를 입력하세요")) {
-                    idTextField.setText("");
-                    
-                }
-            }
- 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (idTextField.getText().equals("")) {
-                    idTextField.setText("ID를 입력하세요");
-                    
-                }
-            }
-        });
-        
-        passwordTextField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (passwordTextField.getText().equals("패스워드를 입력하세요")) {
-                    passwordTextField.setText("");
+			@Override
+			public void focusGained(FocusEvent e) {
 
-                }
-            }
+				if (idTextField.getText().equals("ID를 입력하세요")) {
+					idTextField.setText("");
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (passwordTextField.getText().equals("")) {
-                    passwordTextField.setText("패스워드를 입력하세요");
-                    
-                }
-            }
-        });
-		
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (idTextField.getText().equals("")) {
+					idTextField.setText("ID를 입력하세요");
+
+				}
+			}
+		});
+
+		passwordTextField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (passwordTextField.getText().equals("패스워드를 입력하세요")) {
+					passwordTextField.setText("");
+
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (passwordTextField.getText().equals("")) {
+					passwordTextField.setText("패스워드를 입력하세요");
+
+				}
+			}
+		});
+
 		add(titleLabel);
 		add(idTextField);
 		add(passwordTextField);
 		add(orLabel);
-		
-		
-		titleLabel.setBounds(440,40,100,50);
-		orLabel.setBounds(330,280,330,20);
-		
+
+		titleLabel.setBounds(440, 40, 100, 50);
+		orLabel.setBounds(330, 280, 330, 20);
+
 		idTextField.setBounds(330, 100, 330, 50);
 		passwordTextField.setBounds(330, 160, 330, 50);
 
@@ -85,7 +81,7 @@ public class UserLoginPanel extends MovieReservationPanel {
 		add(loginButton);
 		loginButton.setBounds(330, 220, 330, 50);
 
-		JButton moveToRegisterButton = new MoveToRegisterButton();
+		JButton moveToRegisterButton = new MoveToRegisterButton(1);
 		add(moveToRegisterButton);
 		moveToRegisterButton.setBounds(330, 320, 330, 50);
 
@@ -99,7 +95,6 @@ public class UserLoginPanel extends MovieReservationPanel {
 class UserLoginButton extends JButton {
 	private JTextField idTextField;
 	private JTextField passwordTextField;
-	private Service service = Service.getService();
 
 	UserLoginButton(JTextField idTextField, JTextField passwordTextField) {
 		super("로그인");
@@ -112,26 +107,24 @@ class UserLoginButton extends JButton {
 				performLogin();
 				passwordTextField.setText("");
 
-			}		
+			}
 
 		});
 
 	}
 
 	private void performLogin() {
+		Service service = Service.getService();
 		MovieReservationFrame frame = MovieReservationFrame.getMovieReservationFrame();
-		int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(),0);
-		if (loginRslt == 0)
+		int loginRslt = service.login(idTextField.getText(), passwordTextField.getText(), 0);
+		System.out.println(loginRslt);
+		if (loginRslt == -1)
 			return;
-		else if (loginRslt == 1) {
-			// frame.changePanel(사용자 페이지);
-
-		} else if (loginRslt == 2) {
-			// frame.changePanel(관리자 페이지);
+		else if (loginRslt == 0) {
+			frame.changePanel(frame.getMovieListPanel());
 		}
 
 	}
-
 }
 
 class LoginKeyListener implements KeyListener {
@@ -156,4 +149,4 @@ class LoginKeyListener implements KeyListener {
 		if (e.getKeyChar() == '\n')
 			loginBtn.doClick();
 	}
-};
+}
