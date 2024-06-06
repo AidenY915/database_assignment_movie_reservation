@@ -17,21 +17,21 @@ public class LoginChoice extends MovieReservationPanel {
 	@Override
 	public void init() {
 		setLayout(null);
-		JLabel titleLabel = new JLabel("로그인 선택");
-		titleLabel.setBounds(440, 20, 300, 50);
-		titleLabel.setFont(new Font(getFont().getName(), Font.BOLD, 15));
+		JLabel titleLabel = new JLabel("영화 예매 프로그램");
+
+		titleLabel.setFont(new Font(getFont().getName(), Font.BOLD, 25));
 
 		add(titleLabel);
 
-		titleLabel.setBounds(440, 40, 100, 50);
+		titleLabel.setBounds(370, 40, 400, 50);
 
 		ToAdminButton toAdminButton = new ToAdminButton();
 		ToUserButton toUserButton = new ToUserButton();
 		add(toAdminButton);
 		add(toUserButton);
 
-		toAdminButton.setBounds(200, 100, 150, 100);
-		toUserButton.setBounds(600, 100, 150, 100);
+		toAdminButton.setBounds(175, 300, 200, 100);
+		toUserButton.setBounds(570, 300, 200, 100);
 
 	}
 
