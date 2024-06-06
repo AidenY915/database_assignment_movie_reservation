@@ -283,7 +283,7 @@ public class DAO implements DbInfo, SQLStatment {
 	public boolean insertData(String tableName, String[] columns, String[] values) {
 		StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
 		for (String column : columns) {
-			query.append(column).append(", ");
+			query.append(column.split(" ")[0]).append(", ");
 		}
 		query.setLength(query.length() - 2);
 		query.append(") VALUES (");
