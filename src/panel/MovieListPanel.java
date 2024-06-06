@@ -170,6 +170,7 @@ public class MovieListPanel extends MovieReservationPanel {
 			add(movieNameLabel);
 			addMouseListener(new moveToDetailClickListener(movieDTO));
 
+			setLayout(null);
 			movieNameLabel.setFont(new Font(getFont().getName(), Font.BOLD, 18));
 			movieNameLabel.setBounds(0, 0, WIDTH, HEIGHT);
 			movieNameLabel.setHorizontalAlignment(JLabel.CENTER);
