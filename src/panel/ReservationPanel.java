@@ -49,15 +49,15 @@ public class ReservationPanel extends MovieReservationPanel {
         add(movieSelectLabel);
         add(schedulePanel);
         add(scheduleSelectLabel);
-        add(submitBtn);
+//        add(submitBtn);
 
-        comboBox.setBounds(300, 100, 400, 50);
+        comboBox.setBounds(300, 200, 400, 50);
         comboBox.addActionListener(new SelectMovieListener(this));
-        movieSelectLabel.setBounds(300, 45, 400, 50);
+        movieSelectLabel.setBounds(440, 115, 400, 50);
         movieSelectLabel.setFont(new Font(this.getFont().getName(), Font.BOLD, 20));
-        scheduleSelectLabel.setBounds(300, 230, 400, 50);
+        scheduleSelectLabel.setBounds(440, 380, 400, 50);
         scheduleSelectLabel.setFont(new Font(this.getFont().getName(), Font.BOLD, 20));
-        submitBtn.setBounds(350, 700, 300, 50);
+//        submitBtn.setBounds(350, 700, 300, 50);
 
         if (!isEditMode) {
             selectedMovie = (MovieDTO) comboBox.getSelectedItem();
@@ -139,7 +139,7 @@ public class ReservationPanel extends MovieReservationPanel {
 
     class SchedulePanel extends JPanel {
         SchedulePanel() {
-            setBounds(100, 300, 800, 300);
+            setBounds(100,465, 800, 300);
             setLayout(new FlowLayout());
         }
     }
@@ -163,7 +163,7 @@ public class ReservationPanel extends MovieReservationPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reservationPanel.selectedSchedule = scheduleDTO;
-                reservationPanel.moveToSeatSelection();
+                reservationPanel.moveToSeatSelection();	
             }
         }
     }
